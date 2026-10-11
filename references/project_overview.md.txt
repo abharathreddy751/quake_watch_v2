@@ -1,0 +1,319 @@
+# QuakeWatch Project Overview
+
+## 1. Project summary
+
+QuakeWatch is a Django-based earthquake intelligence platform built around ArangoDB as its primary data store. It ingests live seismic activity from the U.S. Geological Survey (USGS), normalizes and validates the data, tracks changes over time, keeps provenance for source records, and exposes the information through search, map, analytics, alerting, and research workflows.
+
+This project is designed as a serious monitoring and analytical system rather than a simple earthquake feed viewer. It focuses on persistent event history, geospatial querying, graph-based relationships, and explainable alert logic.
+
+> QuakeWatch is not an earthquake prediction system and is not an official emergency warning service.
+
+## 2. Why this project exists
+
+A basic earthquake app can fetch a feed and plot points on a map. QuakeWatch goes beyond that by combining several important concerns:
+
+- live ingestion of real earthquake feeds,
+- historical backfill and replay support,
+- event revision tracking,
+- data provenance and raw payload retention,
+- geospatial and graph query support,
+- user-defined alert rules with explainable matches,
+- research snapshots and exportable datasets,
+- operational monitoring for freshness and health.
+
+This makes the system relevant for both real-world monitoring and research/data-engineering use cases.
+
+## 3. Architecture overview
+
+QuakeWatch is organized as a modular monolith rather than a microservice architecture. The core backend is Python and Django, while ArangoDB is the only stateful database service.
+
+### Core runtime pieces
+
+- Web application: serves pages and APIs
+- Worker process: executes background jobs
+- Scheduler: runs periodic ingestion and maintenance tasks
+- Data store: ArangoDB
+
+A major architectural decision in the project is that it deliberately avoids a traditional relational database, Redis, and Celery. Instead, ArangoDB is used for:
+
+- domain data,
+- user and session storage,
+- cache and throttling state,
+- job queue and scheduling,
+- circuit breaker and lease state,
+- metrics and operational records.
+
+## 4. Technology stack
+
+### Backend
+- Python 3.12+
+- Django
+- Django REST Framework
+- ArangoDB
+- typed environment configuration
+
+### Frontend
+- HTML, CSS, JavaScript
+- Bootstrap-based styling
+- Leaflet for mapping
+- Chart.js for charts
+- server-rendered page shells with API-driven UI islands
+
+### Operations and tooling
+- Docker and Docker Compose
+- pytest
+- Playwright for E2E browser tests
+- Ruff for linting and formatting
+- mypy for static checking
+
+## 5. Repository structure
+
+The codebase is organized by domain area and shared infrastructure:
+
+- apps/core
+  - shared kernel
+  - Arango integration, schema, transactions, metrics, middleware, timing, error handling
+
+- apps/geo
+  - geodesic calculations
+  - bounding box and radius validation
+  - region normalization
+
+- apps/earthquakes
+  - event models and logic
+  - repository and service layer
+  - event APIs and pages
+
+- apps/ingestion
+  - USGS adapters
+  - normalization and validation
+  - revision policy
+  - pipeline for transactional upserts and event updates
+  - backfill and enrichment logic
+
+- apps/alerts
+  - alert rules and match evaluation
+  - explainable alerting APIs
+
+- apps/analytics
+  - summary and time-series analytics
+  - distribution and breakdown queries
+
+- apps/research
+  - snapshots, manifests, reproducibility exports
+
+- apps/operations
+  - health, freshness, diagnostics, admin functions
+
+- apps/jobs
+  - durable job queue, worker, and scheduling layer
+
+- apps/accounts
+  - Arango-backed auth and session management
+
+- apps/web
+  - page layer and user-facing UI shell
+
+- config
+  - Django settings, URLs, environment configuration, app wiring
+
+- docs
+  - architecture, requirements, benchmarks, ADRs, security, runbook
+
+- tests
+  - unit, integration, contract, resilience, architecture, and E2E tests
+
+## 6. Data model and persistence
+
+The project uses ArangoDB as the primary stateful service. Data is modeled as documents and edges instead of relying on a traditional ORM-style relational schema.
+
+Key collections include:
+
+- events
+  - canonical current earthquake records
+
+- event_revisions
+  - immutable history of meaningful changes
+
+- raw_payloads
+  - retained source payloads keyed by content hash
+
+- event_identities
+  - mapping of source IDs to canonical event identifiers
+
+- regions and networks
+  - normalized geographic and network entities
+
+- alert_rules and alert_matches
+  - user-defined rules and explanation-rich matches
+
+- saved_searches
+  - persisted search filters
+
+- research_snapshots
+  - reproducible datasets and query definitions
+
+- ingestion_runs and backfill_jobs
+  - operational tracking
+
+- dead_letters
+  - rejected or failed records
+
+- audit_log
+  - privileged action history
+
+The project also creates graph relationships among events, regions, networks, and user-owned resources to support relationship queries and graph-driven analysis.
+
+## 7. Ingestion pipeline
+
+The ingestion workflow is a central design element of QuakeWatch.
+
+### Typical flow
+
+1. Fetch USGS feed and catalog data
+2. Validate and normalize the payload
+3. Deduplicate and retain raw payloads
+4. Decide if the event is new, unchanged, revised, stale, or rejected
+5. Upsert canonical event records idempotently
+6. Create immutable revision entries when meaningful changes occur
+7. Update derived edge and geographic relationships
+8. Evaluate alert rules if appropriate
+9. Record operational metrics and ingestion logs
+
+This design makes the process safe, traceable, and reproducible.
+
+## 8. Revision-aware event handling
+
+A major project goal is to preserve meaningful earthquake changes instead of silently overwriting earlier values.
+
+Examples of revision-worthy changes include:
+
+- magnitude changes,
+- depth changes,
+- epicenter updates,
+- status changes,
+- alert level changes,
+- product or source metadata changes.
+
+This makes QuakeWatch useful for historical inspection and comparative analysis across time.
+
+## 9. Query and API layer
+
+The project exposes queryable APIs for:
+
+- event listing and search,
+- map queries with bounds and spatial filters,
+- detailed event retrieval,
+- revision and provenance endpoints,
+- relationship queries,
+- analytics summaries and distributions,
+- freshness and health endpoints,
+- operations and admin functionality.
+
+The query layer is intentionally deterministic and uses allow-listed sort keys and bind-variable AQL queries, which helps maintain performance and safety.
+
+## 10. Alerts and user features
+
+QuakeWatch supports user-configured alert rules such as:
+
+- magnitude thresholds,
+- geographic radius conditions,
+- depth constraints,
+- event status and network filters.
+
+Alert matches are designed to be explainable: the system can tell why a specific event triggered a rule. The app also supports saved searches and research snapshots so users can reproduce filtered datasets and exports.
+
+## 11. User interface
+
+The UI is a hybrid approach: server-rendered page shells with JavaScript-driven data islands rather than a purely client-side application. Key areas include:
+
+- dashboard,
+- live map,
+- explorer,
+- event detail pages,
+- analytics page,
+- alerts page,
+- research lab,
+- status page,
+- operations dashboard,
+- accounts pages.
+
+The app also places emphasis on accessibility and safe rendering practices.
+
+## 12. Security and operational posture
+
+The project includes several defensive measures:
+
+- strict Django security settings,
+- session and auth handling,
+- login throttling,
+- request correlation IDs,
+- centralized error handling,
+- parameterized AQL queries,
+- rate limits for API usage,
+- audit logging for privileged operations,
+- CSP and secure cookie configuration in production.
+
+This makes the system more production-minded than a basic demo app.
+
+## 13. Background jobs and scheduling
+
+Instead of Celery, QuakeWatch implements its own durable job queue and scheduler on top of ArangoDB. This supports:
+
+- task registration,
+- job claiming with leases,
+- retries,
+- periodic scheduling,
+- recovery jobs,
+- backfill execution,
+- operational monitoring.
+
+## 14. Testing and verification
+
+The repo includes a broad testing strategy:
+
+- unit tests,
+- contract tests,
+- resilience tests,
+- integration tests using real ArangoDB,
+- architecture boundary tests,
+- browser-driven end-to-end tests,
+- accessibility checks,
+- opt-in live checks against USGS APIs.
+
+The project configuration expects real infrastructure-backed validation rather than mock-heavy behavior.
+
+## 15. Documentation and ADRs
+
+The project is unusually well-documented. It contains:
+
+- README
+- architecture docs
+- product requirements
+- engineering design docs
+- AQL query catalog
+- performance benchmarks
+- runbooks
+- security review
+- dependency records
+- architectural decision records in docs/adr
+
+## 16. Typical operational workflow
+
+A normal system run looks like this:
+
+1. Scheduler triggers a feed sync job.
+2. Ingestion adapters fetch USGS updates.
+3. Data is normalized and deduplicated.
+4. Canonical records are upserted in ArangoDB.
+5. Revision history is written when relevant changes occur.
+6. Graph and derived relationships are updated.
+7. Alert rules are evaluated.
+8. Dashboard and APIs publish the new state.
+9. Staff can inspect health, freshness, dead letters, and diagnostics.
+
+## 17. Summary
+
+QuakeWatch is a serious earthquake monitoring and analytics platform built as a modular Django monolith with ArangoDB at its core. It combines live seismic ingestion, revision-aware event modeling, spatial and graph querying, alert explanation, research exports, and operational observability into one coherent application.
+
+It is best understood as a real-world, database-heavy seismic intelligence system rather than a simple API wrapper or demo app.

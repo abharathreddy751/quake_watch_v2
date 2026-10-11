@@ -1,0 +1,95 @@
+qwb-arango resolves to 10.214.0.2
+arango databases: ['_system']
+redis keys before run: 0
+PREFLIGHT OK
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0
+django: version: 6.0.9, settings: config.settings_test (from ini)
+rootdir: /work
+configfile: pyproject.toml
+testpaths: tests
+plugins: platformdirs-4.12.3, playwright-0.9.0, base-url-2.1.0, django-4.14.0, cov-6.3.0, anyio-4.15.1
+collected 662 items / 61 deselected / 601 selected
+
+tests/integration/test_alerts.py .......................                 [  3%]
+tests/integration/test_api.py ........                                   [  5%]
+tests/integration/test_pages.py ..........                               [  6%]
+tests/integration/test_user_features.py ..............................   [ 11%]
+tests/architecture/test_boundaries.py .................................. [ 17%]
+........................................................................ [ 29%]
+........................................................................ [ 41%]
+...............................                                          [ 46%]
+tests/contract/test_usgs_contract.py .....................               [ 50%]
+tests/integration/test_api.py .......................................... [ 57%]
+..                                                                       [ 57%]
+tests/integration/test_arango_foundation.py ..................           [ 60%]
+tests/integration/test_benchmark.py .....                                [ 61%]
+tests/integration/test_health.py .....                                   [ 62%]
+tests/integration/test_ingestion_services.py ...................         [ 65%]
+tests/integration/test_metrics.py ....                                   [ 65%]
+tests/integration/test_pages.py ..........................               [ 70%]
+tests/integration/test_pipeline.py .......................               [ 74%]
+tests/integration/test_tasks_and_commands.py ............                [ 76%]
+tests/resilience/test_http_resilience.py ......................          [ 79%]
+tests/unit/test_alert_matcher.py ..................                      [ 82%]
+tests/unit/test_core.py ..............                                   [ 85%]
+tests/unit/test_geo.py ...............................                   [ 90%]
+tests/unit/test_query_layer.py ...................................       [ 96%]
+tests/unit/test_revision_policy.py ....................                  [ 99%]
+tests/unit/test_task_context.py ....                                     [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.15-final-0 _______________
+
+Name                                                Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------------
+apps/accounts/security.py                              47      3    94%   37-39
+apps/accounts/signals.py                               31      1    97%   45
+apps/accounts/views.py                                 37      1    97%   42
+apps/alerts/domain.py                                  67      1    99%   42
+apps/alerts/matcher.py                                 60      1    98%   90
+apps/alerts/observer.py                                59      3    95%   72-74
+apps/alerts/services.py                                67      2    97%   54, 82
+apps/analytics/api.py                                  36      3    92%   45-47
+apps/core/api.py                                       85      7    92%   55-56, 68, 70-71, 108, 136
+apps/core/arango/benchmark.py                         180      4    98%   98, 262-263, 273
+apps/core/arango/catalog.py                            28      2    93%   49, 59
+apps/core/arango/client.py                             55      7    87%   29, 36, 75-76, 83, 94-95
+apps/core/arango/migrate.py                           118      4    97%   191-192, 198-199
+apps/core/arango/query.py                              59      4    93%   67, 71-72, 77
+apps/core/arango/schema.py                             75      4    95%   387-390
+apps/core/arango/transactions.py                       49      6    88%   75-76, 90, 105, 117-119
+apps/core/locks.py                                     27      6    78%   36-41, 48-49
+apps/core/management/commands/aql_catalog.py           71     71     0%   3-159
+apps/core/management/commands/arango_benchmark.py      96     20    79%   131-132, 138, 156, 159-166, 169-184, 225
+apps/core/management/commands/arango_migrate.py        20      5    75%   27-37
+apps/earthquakes/domain.py                             84      2    98%   83, 89
+apps/earthquakes/filters.py                           203     18    91%   84-85, 94-96, 106-107, 129, 172, 240-242, 248-250, 259, 263, 265
+apps/earthquakes/repository.py                        173     11    94%   84-85, 87-88, 90-91, 109-110, 366-367, 412
+apps/earthquakes/services.py                          118      6    95%   235, 253, 257, 273, 286, 291
+apps/geo/regions.py                                    43      1    98%   83
+apps/ingestion/adapters/http.py                        94      3    97%   78-79, 129
+apps/ingestion/adapters/usgs.py                        70      6    91%   62, 81-82, 115-124
+apps/ingestion/management/commands/backfill.py         52      6    88%   43-47, 58, 62
+apps/ingestion/normalizer.py                           92      4    96%   67, 97, 157-158
+apps/ingestion/pipeline.py                            164      2    99%   239, 392
+apps/ingestion/repository.py                          113      1    99%   304
+apps/ingestion/revision_policy.py                      47      1    98%   81
+apps/ingestion/services.py                            222      8    96%   155, 229, 231, 256-261, 353
+apps/ingestion/tasks.py                                87      8    91%   74, 89, 113-116, 118-119, 143-144
+apps/operations/actions.py                             39      5    87%   20-21, 30, 36-37
+apps/operations/api.py                                150     12    92%   80, 83-87, 93-98, 122-123, 143, 265
+apps/operations/audit.py                               28      1    96%   42
+apps/operations/health.py                              33      3    91%   36-37, 40
+apps/operations/repository.py                          43      4    91%   113-120, 128-135
+apps/research/repository.py                            44      1    98%   89
+apps/research/services.py                             100      7    93%   51, 64, 69, 123, 152, 156, 169
+apps/web/views.py                                      59      2    97%   46-47
+---------------------------------------------------------------------------------
+TOTAL                                                4421    267    94%
+
+55 files skipped due to complete coverage.
+Coverage XML written to file coverage.xml
+Required test coverage of 90% reached. Total coverage: 93.96%
+================ 601 passed, 61 deselected in 135.60s (0:02:15) ================
+R8 exit=0 duration=142s

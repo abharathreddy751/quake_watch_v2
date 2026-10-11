@@ -1,0 +1,12 @@
+01:48:18 qwb-arango cpu=1.46% mem=264.1MiB / 3.663GiB
+01:48:18 qwb-redis cpu=0.58% mem=5.32MiB / 3.663GiB
+01:48:18 qwb-py cpu=98.48% mem=356.2MiB / 3.663GiB
+01:48:34 qwb-arango cpu=123.58% mem=517.9MiB / 3.663GiB
+01:48:34 qwb-redis cpu=0.49% mem=5.32MiB / 3.663GiB
+01:48:34 qwb-py cpu=33.85% mem=427.1MiB / 3.663GiB
+01:48:51 qwb-arango cpu=94.90% mem=597.6MiB / 3.663GiB
+01:48:51 qwb-redis cpu=0.47% mem=5.184MiB / 3.663GiB
+01:48:51 qwb-py cpu=9.72% mem=433.3MiB / 3.663GiB
+01:49:09 qwb-arango cpu=94.73% mem=693.1MiB / 3.663GiB
+01:49:09 qwb-redis cpu=0.60% mem=4.773MiB / 3.663GiB
+01:49:09 qwb-py cpu=4.92% mem=411MiB / 3.663GiB

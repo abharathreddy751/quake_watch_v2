@@ -1,0 +1,50 @@
+qwb-arango resolves to 10.214.0.2
+arango databases: ['_system']
+redis keys before run: 15
+PREFLIGHT OK
+2026-10-07T01:48:20.183880Z [info     ] arango_schema_applied          [apps.core.arango.migrate] created_collections=['events', 'event_revisions', 'event_identities', 'raw_payloads', 'regions', 'networks', 'users', 'alert_rules', 'alert_matches', 'saved_searches', 'research_snapshots', 'ingestion_runs', 'backfill_jobs', 'dead_letters', 'audit_log', 'schema_meta', 'event_in_region', 'event_reported_by_network', 'user_owns_rule', 'rule_matched_event'] created_indexes=['events.qw_events_source_identity', 'events.qw_events_geo', 'events.qw_events_occurred_at', 'events.qw_events_magnitude', 'event_revisions.qw_revisions_event_rev', 'event_revisions.qw_revisions_observed_at', 'event_revisions.qw_revisions_changed_fields', 'event_identities.qw_identities_event_key', 'raw_payloads.qw_raw_ttl', 'alert_rules.qw_rules_user', 'alert_rules.qw_rules_enabled', 'alert_matches.qw_matches_rule_event', 'alert_matches.qw_matches_user_time', 'saved_searches.qw_saved_user', 'research_snapshots.qw_snapshots_user', 'ingestion_runs.qw_runs_started_at', 'ingestion_runs.qw_runs_status', 'ingestion_runs.qw_runs_kind_started', 'backfill_jobs.qw_backfill_status', 'dead_letters.qw_dead_last_failure', 'dead_letters.qw_dead_source_event', 'audit_log.qw_audit_at'] data_migrations=['v2:identity_claims (0 documents)'] dropped_indexes=[] graph=created replaced_indexes=[] version=2 view=created
+2026-10-07T01:48:21.433117Z [info     ] arango_schema_applied          [apps.core.arango.migrate] created_collections=[] created_indexes=['events.qw_events_geo', 'events.qw_events_occurred_at', 'events.qw_events_magnitude', 'event_revisions.qw_revisions_event_rev', 'event_revisions.qw_revisions_observed_at', 'event_revisions.qw_revisions_changed_fields'] data_migrations=[] dropped_indexes=[] graph=unchanged replaced_indexes=[] version=2 view=unchanged
+2026-10-07T01:48:21.809896Z [info     ] arango_schema_applied          [apps.core.arango.migrate] created_collections=['events', 'event_revisions', 'event_identities', 'raw_payloads', 'regions', 'networks', 'users', 'alert_rules', 'alert_matches', 'saved_searches', 'research_snapshots', 'ingestion_runs', 'backfill_jobs', 'dead_letters', 'audit_log', 'schema_meta', 'event_in_region', 'event_reported_by_network', 'user_owns_rule', 'rule_matched_event'] created_indexes=['events.qw_events_source_identity', 'events.qw_events_geo', 'events.qw_events_occurred_at', 'events.qw_events_magnitude', 'event_revisions.qw_revisions_event_rev', 'event_revisions.qw_revisions_observed_at', 'event_revisions.qw_revisions_changed_fields', 'event_identities.qw_identities_event_key', 'raw_payloads.qw_raw_ttl', 'alert_rules.qw_rules_user', 'alert_rules.qw_rules_enabled', 'alert_matches.qw_matches_rule_event', 'alert_matches.qw_matches_user_time', 'saved_searches.qw_saved_user', 'research_snapshots.qw_snapshots_user', 'ingestion_runs.qw_runs_started_at', 'ingestion_runs.qw_runs_status', 'ingestion_runs.qw_runs_kind_started', 'backfill_jobs.qw_backfill_status', 'dead_letters.qw_dead_last_failure', 'dead_letters.qw_dead_source_event', 'audit_log.qw_audit_at'] data_migrations=['v2:identity_claims (0 documents)'] dropped_indexes=[] graph=created replaced_indexes=[] version=2 view=created
+2026-10-07T01:48:30.499828Z [info     ] arango_schema_applied          [apps.core.arango.migrate] created_collections=[] created_indexes=['events.qw_events_geo', 'events.qw_events_occurred_at', 'events.qw_events_magnitude', 'event_revisions.qw_revisions_event_rev', 'event_revisions.qw_revisions_observed_at', 'event_revisions.qw_revisions_changed_fields'] data_migrations=[] dropped_indexes=[] graph=unchanged replaced_indexes=[] version=2 view=unchanged
+2026-10-07T01:48:30.641391Z [info     ] arango_schema_applied          [apps.core.arango.migrate] created_collections=['events', 'event_revisions', 'event_identities', 'raw_payloads', 'regions', 'networks', 'users', 'alert_rules', 'alert_matches', 'saved_searches', 'research_snapshots', 'ingestion_runs', 'backfill_jobs', 'dead_letters', 'audit_log', 'schema_meta', 'event_in_region', 'event_reported_by_network', 'user_owns_rule', 'rule_matched_event'] created_indexes=['events.qw_events_source_identity', 'events.qw_events_geo', 'events.qw_events_occurred_at', 'events.qw_events_magnitude', 'event_revisions.qw_revisions_event_rev', 'event_revisions.qw_revisions_observed_at', 'event_revisions.qw_revisions_changed_fields', 'event_identities.qw_identities_event_key', 'raw_payloads.qw_raw_ttl', 'alert_rules.qw_rules_user', 'alert_rules.qw_rules_enabled', 'alert_matches.qw_matches_rule_event', 'alert_matches.qw_matches_user_time', 'saved_searches.qw_saved_user', 'research_snapshots.qw_snapshots_user', 'ingestion_runs.qw_runs_started_at', 'ingestion_runs.qw_runs_status', 'ingestion_runs.qw_runs_kind_started', 'backfill_jobs.qw_backfill_status', 'dead_letters.qw_dead_last_failure', 'dead_letters.qw_dead_source_event', 'audit_log.qw_audit_at'] data_migrations=['v2:identity_claims (0 documents)'] dropped_indexes=[] graph=created replaced_indexes=[] version=2 view=created
+2026-10-07T01:49:25.785639Z [info     ] arango_schema_applied          [apps.core.arango.migrate] created_collections=[] created_indexes=['events.qw_events_geo', 'events.qw_events_occurred_at', 'events.qw_events_magnitude', 'event_revisions.qw_revisions_event_rev', 'event_revisions.qw_revisions_observed_at', 'event_revisions.qw_revisions_changed_fields'] data_migrations=[] dropped_indexes=[] graph=unchanged replaced_indexes=[] version=2 view=unchanged
+== 500 events ==
+seeded 500 events in 0.2s
+with    event_list_filtered          p50     1.93 ms  p95     4.18 ms  scanned full/index 0/251
+with    event_list_latest            p50     1.58 ms  p95     2.00 ms  scanned full/index 0/525
+with    geo_radius                   p50     3.96 ms  p95     8.31 ms  scanned full/index 0/80
+with    analytics_magnitude_histogram p50     3.13 ms  p95     7.51 ms  scanned full/index 0/500
+with    revision_lookup              p50     2.70 ms  p95     5.54 ms  scanned full/index 0/4
+dropped indexes: qw_events_geo, qw_events_occurred_at, qw_events_magnitude, qw_revisions_observed_at, qw_revisions_changed_fields, qw_revisions_event_rev
+without event_list_filtered          p50     4.04 ms  p95     7.92 ms  scanned full/index 1000/0
+without event_list_latest            p50     4.34 ms  p95     6.56 ms  scanned full/index 500/500
+without geo_radius                   p50     3.75 ms  p95     6.68 ms  scanned full/index 1000/0
+without analytics_magnitude_histogram p50     3.97 ms  p95     5.52 ms  scanned full/index 500/0
+without revision_lookup              p50     3.62 ms  p95     6.42 ms  scanned full/index 879/0
+== 10,000 events ==
+seeded 10,000 events in 6.4s
+with    event_list_filtered          p50     3.48 ms  p95     5.24 ms  scanned full/index 0/432
+with    event_list_latest            p50     5.21 ms  p95     7.76 ms  scanned full/index 0/10025
+with    geo_radius                   p50     4.59 ms  p95     7.86 ms  scanned full/index 0/1726
+with    analytics_magnitude_histogram p50     5.28 ms  p95     7.96 ms  scanned full/index 0/8153
+with    revision_lookup              p50     1.31 ms  p95     1.96 ms  scanned full/index 0/4
+dropped indexes: qw_events_geo, qw_events_occurred_at, qw_events_magnitude, qw_revisions_observed_at, qw_revisions_changed_fields, qw_revisions_event_rev
+without event_list_filtered          p50     8.21 ms  p95    11.17 ms  scanned full/index 20000/0
+without event_list_latest            p50    12.24 ms  p95    14.98 ms  scanned full/index 10000/10000
+without geo_radius                   p50    12.72 ms  p95    14.73 ms  scanned full/index 20000/0
+without analytics_magnitude_histogram p50     6.66 ms  p95     8.62 ms  scanned full/index 10000/0
+without revision_lookup              p50     5.22 ms  p95     7.35 ms  scanned full/index 17913/0
+== 100,000 events ==
+seeded 100,000 events in 37.8s
+with    event_list_filtered          p50     3.76 ms  p95     5.62 ms  scanned full/index 0/445
+with    event_list_latest            p50    24.52 ms  p95    26.71 ms  scanned full/index 0/100025
+with    geo_radius                   p50    25.73 ms  p95    53.97 ms  scanned full/index 0/18244
+with    analytics_magnitude_histogram p50     8.47 ms  p95    11.66 ms  scanned full/index 0/8021
+with    revision_lookup              p50     2.00 ms  p95     2.41 ms  scanned full/index 0/4
+dropped indexes: qw_events_geo, qw_events_occurred_at, qw_events_magnitude, qw_revisions_observed_at, qw_revisions_changed_fields, qw_revisions_event_rev
+without event_list_filtered          p50    95.27 ms  p95   111.40 ms  scanned full/index 200000/0
+without event_list_latest            p50   116.73 ms  p95   130.29 ms  scanned full/index 100000/100000
+without geo_radius                   p50   122.89 ms  p95   130.37 ms  scanned full/index 200000/0
+without analytics_magnitude_histogram p50    37.29 ms  p95    39.81 ms  scanned full/index 100000/0
+without revision_lookup              p50    47.49 ms  p95    55.11 ms  scanned full/index 180645/0
+R9 exit=0 duration=68s

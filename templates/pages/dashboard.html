@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block page_id %}dashboard{% endblock %}
+{% block vendor_css %}{% include "partials/map_assets_css.html" %}{% endblock %}
+{% block content %}
+<section class="qw-hero" aria-labelledby="hero-title">
+  <div class="qw-hero__content">
+    <p class="qw-eyebrow">Earthquake intelligence</p>
+    <h1 id="hero-title">What is happening now</h1>
+    <p class="qw-hero__lead">Recent global seismic activity from the USGS real-time feeds, updated every few minutes.
+      Every event keeps its full revision history.</p>
+    <div class="qw-hero__actions">
+      <a class="btn btn-primary" href="{% url 'pages:map' %}"><i class="bi bi-broadcast" aria-hidden="true"></i> Open live map</a>
+      <a class="btn btn-outline-secondary" href="{% url 'pages:explorer' %}"><i class="bi bi-table" aria-hidden="true"></i> Explore the catalogue</a>
+    </div>
+  </div>
+  {# Decorative illustration of a seismogram (P and S arrivals, coda); it does not display data. #}
+  <div class="qw-hero__instrument" aria-hidden="true">
+    <svg class="qw-seismo" viewBox="0 0 640 124" focusable="false">
+      <line class="qw-seismo__axis" x1="0" y1="60" x2="640" y2="60"/>
+      <line class="qw-seismo__pick" x1="170" y1="6" x2="170" y2="114"/>
+      <line class="qw-seismo__pick" x1="285" y1="6" x2="285" y2="114"/>
+      <text class="qw-seismo__label" x="175" y="14">P</text>
+      <text class="qw-seismo__label" x="290" y="14">S</text>
+      <path class="qw-seismo__ghost" d="M0 60 L2.2 61.1 L4.4 59.4 L6.6 60.0 L8.8 60.7 L11.0 59.8 L13.2 59.3 L15.4 60.6 L17.6 59.8 L19.8 59.4 L22.0 60.9 L24.2 60.4 L26.4 59.3 L28.6 60.8 L30.8 60.1 L33.0 59.0 L35.2 60.0 L37.4 60.6 L39.6 59.6 L41.8 60.3 L44.0 61.1 L46.2 59.0 L48.4 59.9 L50.6 61.0 L52.8 59.6 L55.0 59.2 L57.2 61.1 L59.4 60.2 L61.6 59.2 L63.8 60.9 L66.0 60.8 L68.2 59.2 L70.4 60.3 L72.6 60.7 L74.8 59.0 L77.0 59.7 L79.2 60.5 L81.4 58.9 L83.6 59.3 L85.8 60.9 L88.0 59.4 L90.2 59.3 L92.4 60.8 L94.6 59.4 L96.8 59.3 L99.0 60.5 L101.2 60.4 L103.4 59.2 L105.6 60.6 L107.8 60.4 L110.0 59.3 L112.2 60.6 L114.4 60.5 L116.6 59.3 L118.8 59.9 L121.0 60.9 L123.2 59.1 L125.4 59.9 L127.6 61.0 L129.8 59.4 L132.0 59.6 L134.2 60.9 L136.4 60.0 L138.6 59.6 L140.8 61.1 L143.0 60.0 L145.2 59.3 L147.4 60.8 L149.6 60.3 L151.8 59.4 L154.0 60.3 L156.2 60.4 L158.4 59.3 L160.6 59.6 L162.8 60.9 L165.0 59.5 L167.2 60.2 L169.4 60.9 L171.6 56.3 L173.8 55.5 L176.0 67.6 L178.2 60.1 L180.4 55.4 L182.6 65.9 L184.8 62.3 L187.0 55.3 L189.2 60.5 L191.4 64.1 L193.6 54.2 L195.8 60.6 L198.0 64.1 L200.2 56.9 L202.4 58.5 L204.6 63.6 L206.8 57.0 L209.0 57.6 L211.2 63.8 L213.4 58.9 L215.6 56.7 L217.8 63.2 L220.0 58.4 L222.2 57.4 L224.4 61.4 L226.6 60.4 L228.8 57.7 L231.0 62.2 L233.2 62.2 L235.4 57.4 L237.6 60.3 L239.8 62.5 L242.0 58.1 L244.2 59.6 L246.4 61.5 L248.6 58.8 L250.8 58.0 L253.0 61.5 L255.2 60.1 L257.4 58.2 L259.6 61.3 L261.8 59.6 L264.0 57.9 L266.2 60.8 L268.4 60.9 L270.6 58.3 L272.8 60.1 L275.0 61.1 L277.2 58.9 L279.4 60.2 L281.6 61.5 L283.8 58.6 L286.0 40.1 L288.2 90.5 L290.4 37.8 L292.6 39.6 L294.8 89.3 L297.0 59.7 L299.2 24.2 L301.4 88.0 L303.6 55.2 L305.8 37.2 L308.0 92.3 L310.2 77.8 L312.4 40.8 L314.6 55.9 L316.8 81.1 L319.0 36.8 L321.2 57.9 L323.4 70.9 L325.6 41.3 L327.8 65.2 L330.0 81.6 L332.2 50.8 L334.4 45.7 L336.6 80.2 L338.8 56.2 L341.0 44.0 L343.2 70.5 L345.4 70.3 L347.6 47.0 L349.8 62.5 L352.0 59.1 L354.2 46.8 L356.4 69.2 L358.6 68.0 L360.8 52.5 L363.0 67.7 L365.2 73.6 L367.4 50.6 L369.6 52.6 L371.8 69.3 L374.0 52.3 L376.2 49.0 L378.4 70.3 L380.6 64.7 L382.8 53.9 L385.0 65.4 L387.2 60.8 L389.4 54.3 L391.6 65.4 L393.8 62.7 L396.0 52.7 L398.2 60.3 L400.4 64.6 L402.6 55.4 L404.8 56.8 L407.0 65.8 L409.2 56.0 L411.4 56.4 L413.6 64.3 L415.8 58.1 L418.0 54.3 L420.2 64.4 L422.4 58.1 L424.6 53.8 L426.8 62.3 L429.0 62.3 L431.2 56.2 L433.4 61.7 L435.6 61.8 L437.8 56.1 L440.0 60.8 L442.2 61.9 L444.4 57.8 L446.6 61.0 L448.8 63.0 L451.0 57.1 L453.2 57.8 L455.4 63.2 L457.6 58.1 L459.8 56.8 L462.0 62.3 L464.2 60.1 L466.4 56.5 L468.6 62.8 L470.8 61.4 L473.0 57.2 L475.2 61.2 L477.4 62.2 L479.6 58.0 L481.8 60.0 L484.0 62.8 L486.2 57.2 L488.4 58.6 L490.6 61.5 L492.8 58.4 L495.0 58.4 L497.2 63.3 L499.4 59.6 L501.6 57.6 L503.8 61.8 L506.0 60.9 L508.2 57.2 L510.4 60.7 L512.6 61.0 L514.8 58.1 L517.0 61.3 L519.2 61.7 L521.4 57.9 L523.6 60.8 L525.8 61.2 L528.0 58.9 L530.2 59.5 L532.4 61.7 L534.6 58.8 L536.8 57.9 L539.0 61.1 L541.2 60.2 L543.4 57.8 L545.6 61.3 L547.8 61.3 L550.0 58.6 L552.2 61.0 L554.4 60.6 L556.6 58.3 L558.8 60.6 L561.0 61.3 L563.2 58.8 L565.4 59.6 L567.6 61.5 L569.8 59.2 L572.0 59.3 L574.2 61.2 L576.4 59.2 L578.6 59.5 L580.8 61.1 L583.0 60.5 L585.2 58.9 L587.4 60.8 L589.6 60.3 L591.8 58.8 L594.0 60.4 L596.2 60.3 L598.4 59.3 L600.6 59.8 L602.8 61.3 L605.0 58.7 L607.2 59.9 L609.4 60.8 L611.6 58.5 L613.8 59.0 L616.0 61.4 L618.2 59.9 L620.4 59.0 L622.6 61.0 L624.8 60.2 L627.0 58.5 L629.2 60.8 L631.4 60.3 L633.6 58.8 L635.8 60.7 L638.0 61.3 L640.2 59.3"/>
+      <path class="qw-seismo__trace" pathLength="1000" d="M0 60 L2.2 61.1 L4.4 59.4 L6.6 60.0 L8.8 60.7 L11.0 59.8 L13.2 59.3 L15.4 60.6 L17.6 59.8 L19.8 59.4 L22.0 60.9 L24.2 60.4 L26.4 59.3 L28.6 60.8 L30.8 60.1 L33.0 59.0 L35.2 60.0 L37.4 60.6 L39.6 59.6 L41.8 60.3 L44.0 61.1 L46.2 59.0 L48.4 59.9 L50.6 61.0 L52.8 59.6 L55.0 59.2 L57.2 61.1 L59.4 60.2 L61.6 59.2 L63.8 60.9 L66.0 60.8 L68.2 59.2 L70.4 60.3 L72.6 60.7 L74.8 59.0 L77.0 59.7 L79.2 60.5 L81.4 58.9 L83.6 59.3 L85.8 60.9 L88.0 59.4 L90.2 59.3 L92.4 60.8 L94.6 59.4 L96.8 59.3 L99.0 60.5 L101.2 60.4 L103.4 59.2 L105.6 60.6 L107.8 60.4 L110.0 59.3 L112.2 60.6 L114.4 60.5 L116.6 59.3 L118.8 59.9 L121.0 60.9 L123.2 59.1 L125.4 59.9 L127.6 61.0 L129.8 59.4 L132.0 59.6 L134.2 60.9 L136.4 60.0 L138.6 59.6 L140.8 61.1 L143.0 60.0 L145.2 59.3 L147.4 60.8 L149.6 60.3 L151.8 59.4 L154.0 60.3 L156.2 60.4 L158.4 59.3 L160.6 59.6 L162.8 60.9 L165.0 59.5 L167.2 60.2 L169.4 60.9 L171.6 56.3 L173.8 55.5 L176.0 67.6 L178.2 60.1 L180.4 55.4 L182.6 65.9 L184.8 62.3 L187.0 55.3 L189.2 60.5 L191.4 64.1 L193.6 54.2 L195.8 60.6 L198.0 64.1 L200.2 56.9 L202.4 58.5 L204.6 63.6 L206.8 57.0 L209.0 57.6 L211.2 63.8 L213.4 58.9 L215.6 56.7 L217.8 63.2 L220.0 58.4 L222.2 57.4 L224.4 61.4 L226.6 60.4 L228.8 57.7 L231.0 62.2 L233.2 62.2 L235.4 57.4 L237.6 60.3 L239.8 62.5 L242.0 58.1 L244.2 59.6 L246.4 61.5 L248.6 58.8 L250.8 58.0 L253.0 61.5 L255.2 60.1 L257.4 58.2 L259.6 61.3 L261.8 59.6 L264.0 57.9 L266.2 60.8 L268.4 60.9 L270.6 58.3 L272.8 60.1 L275.0 61.1 L277.2 58.9 L279.4 60.2 L281.6 61.5 L283.8 58.6 L286.0 40.1 L288.2 90.5 L290.4 37.8 L292.6 39.6 L294.8 89.3 L297.0 59.7 L299.2 24.2 L301.4 88.0 L303.6 55.2 L305.8 37.2 L308.0 92.3 L310.2 77.8 L312.4 40.8 L314.6 55.9 L316.8 81.1 L319.0 36.8 L321.2 57.9 L323.4 70.9 L325.6 41.3 L327.8 65.2 L330.0 81.6 L332.2 50.8 L334.4 45.7 L336.6 80.2 L338.8 56.2 L341.0 44.0 L343.2 70.5 L345.4 70.3 L347.6 47.0 L349.8 62.5 L352.0 59.1 L354.2 46.8 L356.4 69.2 L358.6 68.0 L360.8 52.5 L363.0 67.7 L365.2 73.6 L367.4 50.6 L369.6 52.6 L371.8 69.3 L374.0 52.3 L376.2 49.0 L378.4 70.3 L380.6 64.7 L382.8 53.9 L385.0 65.4 L387.2 60.8 L389.4 54.3 L391.6 65.4 L393.8 62.7 L396.0 52.7 L398.2 60.3 L400.4 64.6 L402.6 55.4 L404.8 56.8 L407.0 65.8 L409.2 56.0 L411.4 56.4 L413.6 64.3 L415.8 58.1 L418.0 54.3 L420.2 64.4 L422.4 58.1 L424.6 53.8 L426.8 62.3 L429.0 62.3 L431.2 56.2 L433.4 61.7 L435.6 61.8 L437.8 56.1 L440.0 60.8 L442.2 61.9 L444.4 57.8 L446.6 61.0 L448.8 63.0 L451.0 57.1 L453.2 57.8 L455.4 63.2 L457.6 58.1 L459.8 56.8 L462.0 62.3 L464.2 60.1 L466.4 56.5 L468.6 62.8 L470.8 61.4 L473.0 57.2 L475.2 61.2 L477.4 62.2 L479.6 58.0 L481.8 60.0 L484.0 62.8 L486.2 57.2 L488.4 58.6 L490.6 61.5 L492.8 58.4 L495.0 58.4 L497.2 63.3 L499.4 59.6 L501.6 57.6 L503.8 61.8 L506.0 60.9 L508.2 57.2 L510.4 60.7 L512.6 61.0 L514.8 58.1 L517.0 61.3 L519.2 61.7 L521.4 57.9 L523.6 60.8 L525.8 61.2 L528.0 58.9 L530.2 59.5 L532.4 61.7 L534.6 58.8 L536.8 57.9 L539.0 61.1 L541.2 60.2 L543.4 57.8 L545.6 61.3 L547.8 61.3 L550.0 58.6 L552.2 61.0 L554.4 60.6 L556.6 58.3 L558.8 60.6 L561.0 61.3 L563.2 58.8 L565.4 59.6 L567.6 61.5 L569.8 59.2 L572.0 59.3 L574.2 61.2 L576.4 59.2 L578.6 59.5 L580.8 61.1 L583.0 60.5 L585.2 58.9 L587.4 60.8 L589.6 60.3 L591.8 58.8 L594.0 60.4 L596.2 60.3 L598.4 59.3 L600.6 59.8 L602.8 61.3 L605.0 58.7 L607.2 59.9 L609.4 60.8 L611.6 58.5 L613.8 59.0 L616.0 61.4 L618.2 59.9 L620.4 59.0 L622.6 61.0 L624.8 60.2 L627.0 58.5 L629.2 60.8 L631.4 60.3 L633.6 58.8 L635.8 60.7 L638.0 61.3 L640.2 59.3"/>
+      <line class="qw-seismo__scan" x1="0" y1="4" x2="0" y2="116"/>
+    </svg>
+    <div class="qw-hero__readout"><span>Illustrative seismogram</span><span>P-wave · S-wave · coda</span></div>
+  </div>
+</section>
+
+<section aria-labelledby="summary-heading">
+  <h2 id="summary-heading" class="visually-hidden">Summary</h2>
+  <div id="summary" class="row g-3" aria-live="polite"></div>
+</section>
+
+<div class="row g-3 mt-1">
+  <section class="col-lg-8" aria-labelledby="map-heading">
+    <div class="qw-card qw-card--map">
+      <div class="qw-card-head">
+        <h2 class="qw-panel-title" id="map-heading">Last 24 hours on the map</h2>
+        <a class="small" href="{% url 'pages:map' %}">Full live map →</a>
+      </div>
+      <div class="qw-map-frame">
+        <div id="preview-map" class="qw-map qw-map-sm" aria-label="Map of earthquakes in the last 24 hours. The list of recent events on this page contains the same information."></div>
+      </div>
+      <div id="preview-map-state" class="qw-map-status mt-2" role="status"></div>
+    </div>
+  </section>
+  <section class="col-lg-4" aria-labelledby="recent-heading">
+    <div class="qw-card">
+      <div class="qw-card-head">
+        <h2 class="qw-panel-title" id="recent-heading">Most recent events</h2>
+        <a class="small" href="{% url 'pages:explorer' %}">Explore all →</a>
+      </div>
+      <div id="recent"></div>
+    </div>
+  </section>
+</div>
+
+<div class="row g-3 mt-1">
+  <section class="col-lg-7" aria-labelledby="activity-heading">
+    <div class="qw-card">
+      <h2 id="activity-heading">Daily activity by magnitude (last 14 days)</h2>
+      <div id="activity"></div>
+      <p class="small text-body-secondary mt-2 mb-0">Historical backfill imports M2.5+ events; smaller events
+        appear only from the start of live monitoring, so the M&lt;2.5 band is not comparable across days.</p>
+    </div>
+  </section>
+  <section class="col-lg-5" aria-labelledby="significant-heading">
+    <div class="qw-card">
+      <h2 id="significant-heading">Significant events (last 7 days)</h2>
+      <p class="small text-body-secondary">Significance ≥ 600, a PAGER alert level, or a tsunami flag (USGS values).</p>
+      <div id="significant"></div>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+{% include "partials/map_assets_js.html" %}
+<script src="{% static 'vendor/chart.js/chart.umd.min.js' %}"></script>
+<script src="{% static 'qw/js/charts.js' %}"></script>
+<script src="{% static 'qw/js/dashboard.js' %}"></script>
+{% endblock %}

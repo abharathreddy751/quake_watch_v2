@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<div class="qw-auth">
+  {% include "partials/auth_brand.html" %}
+  <div class="qw-card qw-auth__panel">
+    <h1>Log in</h1>
+    <p class="text-body-secondary small mb-4">Welcome back. Sign in to your QuakeWatch account.</p>
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert" id="login-errors">{{ form.non_field_errors|join:" " }}</div>
+    {% endif %}
+    <form method="post" novalidate{% if form.non_field_errors %} aria-describedby="login-errors"{% endif %}>
+      {% csrf_token %}
+      {% for field in form %}{% include "partials/field.html" %}{% endfor %}
+      <input type="hidden" name="next" value="{{ next }}">
+      <button type="submit" class="btn btn-primary w-100">Log in</button>
+    </form>
+    <p class="qw-auth__alt">No account yet? <a href="{% url 'accounts:signup' %}">Sign up</a>.</p>
+  </div>
+</div>
+{% endblock %}

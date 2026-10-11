@@ -1,0 +1,10 @@
+# Runtime dependencies. Every entry must solve a concrete problem; see docs/DEPENDENCIES.md.
+Django>=6.0.8,<6.1              # web framework, auth, CSRF, sessions, native CSP middleware
+djangorestframework>=3.18,<3.19 # versioned JSON API, validation serializers, throttling
+python-arango>=8.3,<9           # ArangoDB driver (AQL, stream transactions, indexes, views)
+httpx>=0.28,<0.29               # upstream USGS HTTP client with explicit connect/read timeouts
+pydantic>=2.11,<3               # strict validation of source payloads and domain DTOs
+pydantic-settings>=2.10,<3      # typed, validated environment configuration
+structlog>=25.4,<26             # structured JSON logs with contextvar correlation IDs
+gunicorn>=23,<24                # production WSGI server (container)
+whitenoise>=6.9,<7              # serve hashed static assets without a separate web server

@@ -1,0 +1,28 @@
+qwb-arango resolves to 10.214.0.2
+arango databases: ['_system']
+redis keys before run: 15
+PREFLIGHT OK
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0
+django: version: 6.0.9, settings: config.settings_test (from ini)
+rootdir: /work
+configfile: pyproject.toml
+plugins: platformdirs-4.12.3, playwright-0.9.0, base-url-2.1.0, django-4.14.0, cov-6.3.0, anyio-4.15.1
+collected 58 items
+
+tests/e2e/test_accessibility.py ...........                              [ 18%]
+tests/e2e/test_flows.py .....................                            [ 55%]
+tests/e2e/test_accessibility.py ....                                     [ 62%]
+tests/e2e/test_flows.py .                                                [ 63%]
+tests/e2e/test_accessibility.py ...                                      [ 68%]
+tests/e2e/test_flows.py .                                                [ 70%]
+tests/e2e/test_accessibility.py ..                                       [ 74%]
+tests/e2e/test_flows.py .                                                [ 75%]
+tests/e2e/test_accessibility.py .                                        [ 77%]
+tests/e2e/test_flows.py .                                                [ 79%]
+tests/e2e/test_accessibility.py .                                        [ 81%]
+tests/e2e/test_flows.py .                                                [ 82%]
+tests/e2e/test_accessibility.py ..........                               [100%]
+
+======================== 58 passed in 183.79s (0:03:03) ========================
+O2 exit=0 duration=192s

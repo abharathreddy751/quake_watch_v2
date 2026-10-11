@@ -1,0 +1,65 @@
+# Local / college-demo deployment profile (ESD §18): web, worker, scheduler, arangodb.
+# ArangoDB is the only stateful service (data, jobs, schedules, cache, metrics, leases).
+# Secrets come from .env (never committed). See .env.example.
+name: quakewatch
+
+x-app: &app
+  image: quakewatch-app:${APP_VERSION:-dev}  # one image for web/worker/scheduler: never drift
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+    args:
+      APP_VERSION: ${APP_VERSION:-dev}
+  env_file: .env
+  environment:
+    QW_ARANGO_URL: http://arangodb:8529
+  volumes:
+    # Legacy SQLite auth store (pre ADR-015), read-only: source for `manage.py migrate_auth_to_arango`.
+    # Remove this mount and the volume only after the migration is verified.
+    - auth_data:/data/auth:ro
+  depends_on:
+    arangodb:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+  arangodb:
+    image: arangodb:3.12.5
+    environment:
+      ARANGO_ROOT_PASSWORD: ${QW_ARANGO_ROOT_PASSWORD:?set QW_ARANGO_ROOT_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:8529:8529"
+    volumes:
+      - arango_data:/var/lib/arangodb3
+      - arango_apps:/var/lib/arangodb3-apps
+    healthcheck:
+      # The availability endpoint needs no credentials (keeps the root password out of probes).
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8529/_admin/server/availability || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  web:
+    <<: *app
+    command: ["/app/docker/entrypoint.sh", "web"]
+    ports:
+      - "127.0.0.1:8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=3).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    <<: *app
+    command: ["/app/docker/entrypoint.sh", "worker"]
+
+  scheduler:
+    <<: *app
+    command: ["/app/docker/entrypoint.sh", "scheduler"]
+
+volumes:
+  arango_data:
+  arango_apps:
+  auth_data:
