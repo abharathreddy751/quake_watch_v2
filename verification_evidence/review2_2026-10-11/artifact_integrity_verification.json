@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "aql_15_executed": true,
+    "schema_target_test_db": true,
+    "transaction_passed": true,
+    "crud_passed": true,
+    "dump_manifest_parseable": true,
+    "dump_files_nonempty": true,
+    "gzip_payloads_decompress": true
+  },
+  "aql_executed": 15,
+  "query_zero_result_ids": [
+    "analytics_magnitude_changes",
+    "analytics_significant_by_week",
+    "alerts_user_rules",
+    "alerts_matched_events_graph",
+    "ops_run_stats",
+    "event_nearby_space_time"
+  ],
+  "schema_version": 6,
+  "schema_collections": 31,
+  "transaction_status": "passed",
+  "crud_status": "passed",
+  "native_dump_relative_path": "native_arangodump_2026-10-11",
+  "native_dump_file_count": 65,
+  "native_dump_total_bytes": 159002,
+  "native_dump_gzip_file_count": 31,
+  "native_dump_manifest_keys": [
+    "createdAt",
+    "database",
+    "lastTickAtDumpStart",
+    "properties",
+    "useEnvelope",
+    "useVPack"
+  ]
+}

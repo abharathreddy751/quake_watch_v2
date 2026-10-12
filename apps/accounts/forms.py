@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Any, cast
+from typing import Any
 
 from django import forms
-from django.contrib.auth import password_validation
+from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from apps.accounts.identity import ArangoUser, create_user
@@ -14,14 +14,6 @@ from apps.core.arango.client import get_db
 from apps.core.errors import Conflict
 
 _DUPLICATE = "A user with that username already exists."
-
-
-class _Candidate:
-    """Attributes UserAttributeSimilarityValidator compares the password against."""
-
-    def __init__(self, username: str, email: str) -> None:
-        self.username = username
-        self.email = email
 
 
 class SignupForm(forms.Form):
@@ -66,10 +58,11 @@ class SignupForm(forms.Form):
         cleaned = super().clean() or {}
         password = cleaned.get("password2")
         if password and "username" in cleaned:
-            candidate = _Candidate(str(cleaned["username"]), str(cleaned.get("email") or ""))
+            candidate = get_user_model()(
+                username=str(cleaned["username"]), email=str(cleaned.get("email") or "")
+            )
             try:
-                # The validators only read attributes (similarity check); stubs expect a User.
-                password_validation.validate_password(password, cast(Any, candidate))
+                password_validation.validate_password(password, candidate)
             except forms.ValidationError as error:
                 self.add_error("password2", error)
         return cleaned

@@ -1,0 +1,61 @@
+{
+  "matching_events_total": 556,
+  "results": [
+    {
+      "n": 1,
+      "operation": "Create saved search",
+      "method": "POST",
+      "status": 201,
+      "expected": 201,
+      "ok": true
+    },
+    {
+      "n": 2,
+      "operation": "List saved searches",
+      "method": "GET",
+      "status": 200,
+      "expected": 200,
+      "ok": true
+    },
+    {
+      "n": 3,
+      "operation": "Read saved search by id",
+      "method": "GET",
+      "status": 200,
+      "expected": 200,
+      "ok": true
+    },
+    {
+      "n": 4,
+      "operation": "Update (rename) saved search",
+      "method": "PATCH",
+      "status": 200,
+      "expected": 200,
+      "ok": true
+    },
+    {
+      "n": 5,
+      "operation": "Run saved search on earthquake data",
+      "method": "GET",
+      "status": 200,
+      "expected": 200,
+      "ok": true
+    },
+    {
+      "n": 6,
+      "operation": "Delete saved search",
+      "method": "DELETE",
+      "status": 204,
+      "expected": 204,
+      "ok": true
+    },
+    {
+      "n": 7,
+      "operation": "Verify deletion",
+      "method": "GET",
+      "status": 404,
+      "expected": 404,
+      "ok": true
+    }
+  ]
+}

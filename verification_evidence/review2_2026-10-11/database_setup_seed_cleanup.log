@@ -1,0 +1,26 @@
+QuakeWatch Review 2 database lifecycle, 2026-10-11
+
+All database-changing commands were guarded inside the web container by QW_ENV=test, effective database name quakewatch_test, endpoint http://arangodb:8529, and an exact database-list check. The live quakewatch database was never targeted.
+
+Before schema setup:
+environment=test
+effective_database=quakewatch_test
+endpoint=http://arangodb:8529
+database_list=_system,quakewatch
+exit_code=0
+
+Action: existing manage.py arango_migrate command, guarded to quakewatch_test.
+Result: exit_code=0; schema version 6 applied. Created 31 declared collections, 32 named indexes, the search view and graph; v2 identity-claims migration affected 0 documents. No existing collection or index in quakewatch was inspected or modified.
+
+Action: existing recorded test fixture tests/fixtures/usgs/all_day.geojson parsed and ingested through parse_feed() and IngestionPipeline.ingest() against quakewatch_test.
+Result: exit_code=0; 221 records parsed, 0 rejected; inserted=221; revised/refreshed/unchanged/stale/rejected/failed=0; events=221; revisions=221.
+
+After Review 2 validations, the captured inventory for quakewatch_test (schema version 6) was: events 221, event_revisions 221, event_identities 232, raw_payloads 221, regions 24, networks 12, event_in_region 221, event_reported_by_network 221, audit_log 2, metric_counters 2, metric_series 17, id_sequences 1, schema_meta 1; other declared collections 0. Total documents: 1,396. There were 31 declared collections and 67 observed index definitions, including built-in indexes.
+
+Cleanup:
+The project drop_database('quakewatch_test') helper was called only after asserting QW_ENV=test, effective target quakewatch_test, endpoint http://arangodb:8529, and database list exactly _system,quakewatch,quakewatch_test.
+Exit_code: 0
+Database list before cleanup: _system,quakewatch,quakewatch_test
+Database list after cleanup: _system,quakewatch
+Protected quakewatch still present: true
+No container or Docker volume was reset, recreated, pruned, or deleted.

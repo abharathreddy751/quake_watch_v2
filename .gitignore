@@ -22,3 +22,9 @@ graphify-out/20*/
 
 # local database backups (docs/RUNBOOK.md)
 backups/
+
+# assignment evidence: local-only demo credentials / scratch output
+assignment-evidence/04-postman-collection/
+assignment-evidence/05-reports/CRUD_API_DEMO_GUIDE.md
+assignment-evidence/scripts/_*
+assignment-evidence/06-vscode-guide/

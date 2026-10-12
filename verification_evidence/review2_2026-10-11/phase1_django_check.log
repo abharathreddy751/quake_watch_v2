@@ -1,0 +1,15 @@
+Command:
+docker compose exec -T -e DJANGO_SETTINGS_MODULE=config.settings_test -e QW_ENV=test web python manage.py check
+
+Container settings:
+DJANGO_SETTINGS_MODULE=config.settings_test
+QW_ENV=test
+Effective database at pre-test verification: quakewatch_test
+ArangoDB endpoint: http://arangodb:8529
+Database list immediately before check: _system,quakewatch
+
+Exit code: 0
+stdout:
+System check identified no issues (0 silenced).
+
+stderr: (empty)

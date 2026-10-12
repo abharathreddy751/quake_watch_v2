@@ -1,0 +1,20 @@
+command=docker compose exec -T -e QW_ENV=test -e DJANGO_SETTINGS_MODULE=config.settings_test web python -c <guarded transaction validation>
+exit_code=1
+--- stdout ---
+
+--- stderr ---
+2026-10-11T14:17:49.603236Z [info     ] txn_conflict_retry             [apps.core.arango.transactions] attempt=1 delay_s=0.061
+Traceback (most recent call last):
+  File "<string>", line 59, in <module>
+  File "/usr/local/lib/python3.12/site-packages/arango/collection.py", line 2841, in delete
+    return self._execute(request, response_handler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/arango/api.py", line 74, in _execute
+    return self._executor.execute(request, response_handler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/arango/executor.py", line 67, in execute
+    return response_handler(resp)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/arango/collection.py", line 2838, in response_handler
+    raise DocumentDeleteError(resp, request)
+arango.exceptions.DocumentDeleteError: [HTTP 404][ERR 1202] document not found

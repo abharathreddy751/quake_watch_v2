@@ -1,0 +1,6 @@
+command=docker compose exec -T -e QW_ENV=test -e DJANGO_SETTINGS_MODULE=config.settings_test web python -c <guarded final inventory>
+exit_code=0
+--- stdout ---
+FINAL_INVENTORY_JSON={"environment": "test", "database": "quakewatch_test", "endpoint": "http://arangodb:8529", "database_list": ["_system", "quakewatch", "quakewatch_test"], "schema_version": 6, "collection_counts": {"events": 221, "event_revisions": 221, "event_identities": 232, "raw_payloads": 221, "regions": 24, "networks": 12, "users": 0, "alert_rules": 0, "alert_matches": 0, "saved_searches": 0, "research_snapshots": 0, "ingestion_runs": 0, "backfill_jobs": 0, "dead_letters": 0, "audit_log": 2, "job_leases": 0, "cache_entries": 0, "rate_limits": 0, "metric_counters": 2, "metric_series": 17, "circuit_breakers": 0, "jobs": 0, "job_schedules": 0, "auth_users": 0, "sessions": 0, "id_sequences": 1, "schema_meta": 1, "event_in_region": 221, "event_reported_by_network": 221, "user_owns_rule": 0, "rule_matched_event": 0}, "total_documents": 1396}
+
+--- stderr ---

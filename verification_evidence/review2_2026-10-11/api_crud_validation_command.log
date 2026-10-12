@@ -1,0 +1,35 @@
+command=docker compose exec -T -e QW_ENV=test -e DJANGO_SETTINGS_MODULE=config.settings_test web python -c <guarded Django-client CRUD>
+exit_code=0
+--- stdout ---
+CRUD_EVIDENCE_JSON={"environment": "test", "database": "quakewatch_test", "database_list": ["_system", "quakewatch", "quakewatch_test"], "error": {"type": "ValueError", "message": "Content-Type header is \"text/html\", not \"application/json\""}, "cleanup": {"user_absent": true, "session_absent": true, "search_absent": true}, "database_list_after": ["_system", "quakewatch", "quakewatch_test"], "overall_status": "failed"}
+
+--- stderr ---
+2026-10-11T14:18:50.472524Z [info     ] audit                          [apps.operations.audit] action=auth.login_succeeded actor=review2_043457162eb1 outcome=ok target=None
+Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/http/request.py", line 206, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+2026-10-11T14:18:50.553360Z [error    ] Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS. [django.security.DisallowedHost] correlation_id=71929301bc514db69e9678037b63ace7
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/http/request.py", line 206, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.

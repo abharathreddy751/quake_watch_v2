@@ -8,7 +8,7 @@ license = "MIT"
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-extend-exclude = ["static/vendor", "graphify-out"]
+extend-exclude = ["static/vendor", "graphify-out", "assignment-evidence"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "S", "BLE", "C4", "DTZ", "SIM", "RUF", "PT", "RET", "TID"]

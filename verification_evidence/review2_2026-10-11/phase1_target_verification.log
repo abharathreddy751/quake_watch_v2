@@ -1,0 +1,33 @@
+Fresh-process execution fallback:
+Shell: Windows PowerShell 5.1.26100.9444
+Working directory: D:\bharath projects\quakewatch
+Output: fresh-shell-probe
+Exit code: 0
+
+Read-only web-container target probe (before system check):
+environment=test
+effective_database=quakewatch_test
+configured_database=quakewatch
+endpoint=http://arangodb:8529
+database_list=_system,quakewatch
+test_database_exists=False
+exit_code=0
+
+Read-only web-container target probe immediately before pytest:
+environment=test
+effective_database=quakewatch_test
+configured_database=quakewatch
+endpoint=http://arangodb:8529
+database_list=_system,quakewatch
+test_database_exists=False
+exit_code=0
+
+Post-pytest target probe:
+environment=test
+effective_database=quakewatch_test
+endpoint=http://arangodb:8529
+database_list=_system,quakewatch
+test_database_exists=False
+exit_code=0
+
+After isolated schema/setup and validations, the DB list was _system,quakewatch,quakewatch_test. The guarded cleanup dropped only quakewatch_test; final list _system,quakewatch (exit code 0). No credential values were printed.

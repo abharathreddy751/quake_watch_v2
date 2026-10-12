@@ -1,0 +1,81 @@
+{
+  "environment": "test",
+  "database": "quakewatch_test",
+  "database_list": [
+    "_system",
+    "quakewatch",
+    "quakewatch_test"
+  ],
+  "http_host": "localhost",
+  "create": {
+    "status_code": 201,
+    "content_type": "application/json",
+    "body": {
+      "created_at": "2026-10-11T14:19:08.753Z",
+      "filters": {
+        "direction": "desc",
+        "min_magnitude": 1,
+        "sort": "occurred_at"
+      },
+      "name": "Review2 saved search",
+      "summary": "magnitude 1 to any â€” sorted by occurred_at desc",
+      "updated_at": "2026-10-11T14:19:08.753Z",
+      "user_id": 2,
+      "id": "62934"
+    }
+  },
+  "read_detail": {
+    "status_code": 200,
+    "body": {
+      "created_at": "2026-10-11T14:19:08.753Z",
+      "filters": {
+        "direction": "desc",
+        "min_magnitude": 1,
+        "sort": "occurred_at"
+      },
+      "name": "Review2 saved search",
+      "summary": "magnitude 1 to any â€” sorted by occurred_at desc",
+      "updated_at": "2026-10-11T14:19:08.753Z",
+      "user_id": 2,
+      "id": "62934"
+    }
+  },
+  "read_list": {
+    "status_code": 200,
+    "count": 1
+  },
+  "update": {
+    "status_code": 200,
+    "body": {
+      "created_at": "2026-10-11T14:19:08.753Z",
+      "filters": {
+        "direction": "desc",
+        "min_magnitude": 1,
+        "sort": "occurred_at"
+      },
+      "name": "Review2 renamed search",
+      "summary": "magnitude 1 to any â€” sorted by occurred_at desc",
+      "updated_at": "2026-10-11T14:19:08.775Z",
+      "user_id": 2,
+      "id": "62934"
+    }
+  },
+  "delete": {
+    "status_code": 204
+  },
+  "read_after_delete": {
+    "status_code": 200,
+    "results": []
+  },
+  "cleanup": {
+    "user_absent": true,
+    "session_absent": true,
+    "search_absent": true
+  },
+  "database_list_after": [
+    "_system",
+    "quakewatch",
+    "quakewatch_test"
+  ],
+  "overall_status": "passed"
+}

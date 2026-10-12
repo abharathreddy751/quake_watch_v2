@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-10-11",
+  "files": [
+    {
+      "path": "submission_artifacts/review2_2026-10-11/Review2_QuakeWatch_2026-10-11.docx",
+      "bytes": 3079,
+      "sha256": "8a2bc168c4d1c84d6fc6990b8766cee4e082507f2c685b314afdf32f4c8e8502",
+      "pages": null
+    },
+    {
+      "path": "submission_artifacts/review2_2026-10-11/Review2_QuakeWatch_2026-10-11.pdf",
+      "bytes": 4090,
+      "sha256": "c027aa408402f38fb3620e09bd84fdc73b60ede94dd141639a09d94b57f52a53",
+      "pages": 1
+    },
+    {
+      "path": "submission_artifacts/review2_2026-10-11/Selected_15_AQL_Queries_2026-10-11.pdf",
+      "bytes": 4325,
+      "sha256": "afa0977330378d6077a7cab2c2aed46c9f61d78334c115d2c0e03e0e90d1fd6c",
+      "pages": 1
+    },
+    {
+      "path": "submission_artifacts/review2_2026-10-11/Review2_Test_Cases_2026-10-11.xlsx",
+      "bytes": 4997,
+      "sha256": "d6d01f0886011655c134caf54558ca24e645e56aaddc97f63dffa31cef0af177",
+      "pages": null
+    },
+    {
+      "path": "submission_artifacts/review2_2026-10-11/README.md",
+      "bytes": 865,
+      "sha256": "3ffb91deb6e60a9058a690378194174c38f86c9b5bb7a6d67b1e9cf5ff385b18",
+      "pages": null
+    }
+  ],
+  "validation": {
+    "docx_xlsx_packages_validated": true,
+    "test_case_rows": 23,
+    "review_pdf_pages": 1,
+    "query_pdf_pages": 1,
+    "pdf_page_objects_and_content_checked": true
+  }
+}

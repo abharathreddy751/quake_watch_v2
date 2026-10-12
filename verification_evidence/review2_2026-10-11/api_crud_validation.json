@@ -1,0 +1,24 @@
+{
+  "environment": "test",
+  "database": "quakewatch_test",
+  "database_list": [
+    "_system",
+    "quakewatch",
+    "quakewatch_test"
+  ],
+  "error": {
+    "type": "ValueError",
+    "message": "Content-Type header is \"text/html\", not \"application/json\""
+  },
+  "cleanup": {
+    "user_absent": true,
+    "session_absent": true,
+    "search_absent": true
+  },
+  "database_list_after": [
+    "_system",
+    "quakewatch",
+    "quakewatch_test"
+  ],
+  "overall_status": "failed"
+}

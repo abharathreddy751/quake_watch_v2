@@ -1,0 +1,10 @@
+command=docker compose exec -T -e QW_ENV=test -e DJANGO_SETTINGS_MODULE=config.settings_test web python -c <guarded drop_database('quakewatch_test')>
+exit_code=0
+--- stdout ---
+environment=test
+dropped_database=quakewatch_test
+database_list_before=_system,quakewatch,quakewatch_test
+database_list_after=_system,quakewatch
+protected_quakewatch_present=True
+
+--- stderr ---

@@ -1,0 +1,783 @@
+{
+  "passed": 15,
+  "total": 15,
+  "results": [
+    {
+      "n": 1,
+      "name": "Open login page (obtain CSRF cookie)",
+      "op": "AUTH",
+      "method": "GET",
+      "url": "http://localhost:8000/accounts/login/",
+      "request_body": null,
+      "expected": 200,
+      "actual": 200,
+      "passed": true,
+      "elapsed_ms": 2053.8,
+      "server_ms": "2.18",
+      "location": null,
+      "response_body": "<!doctype html>\n<html lang=\"en\" data-bs-theme=\"dark\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <meta name=\"description\" content=\"QuakeWa",
+      "saved": {},
+      "db_state": null,
+      "db": "Session middleware issues the csrftoken cookie; no DB write."
+    },
+    {
+      "n": 2,
+      "name": "Log in (create session)",
+      "op": "AUTH / CREATE session",
+      "method": "POST",
+      "url": "http://localhost:8000/accounts/login/",
+      "request_body": {
+        "username": "{{username}}",
+        "password": "********"
+      },
+      "expected": 302,
+      "actual": 302,
+      "passed": true,
+      "elapsed_ms": 2331.6,
+      "server_ms": "288.79",
+      "location": "/",
+      "response_body": "",
+      "saved": {},
+      "db_state": {
+        "check": "auth_users + sessions after login",
+        "aql": "RETURN {user_exists: LENGTH(FOR u IN auth_users FILTER u.username == @user RETURN 1) == 1, live_sessions: LENGTH(sessions)}",
+        "bind": {
+          "user": "qw_rehearsal"
+        },
+        "result": {
+          "user_exists": true,
+          "live_sessions": 6
+        }
+      },
+      "db": "Credentials checked against `users`; session document written to `sessions`."
+    },
+    {
+      "n": 3,
+      "name": "System health (backend + DB connectivity)",
+      "op": "READ",
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/system/health",
+      "request_body": null,
+      "expected": 200,
+      "actual": 200,
+      "passed": true,
+      "elapsed_ms": 2103.5,
+      "server_ms": "14.83",
+      "location": null,
+      "response_body": {
+        "status": "ok",
+        "database": "up",
+        "cache": "up",
+        "freshness": "fresh",
+        "checked_at": "2026-10-11T16:48:27.241Z"
+      },
+      "saved": {},
+      "db_state": null,
+      "db": "Pings ArangoDB and cache; reads freshness from `ingestion_runs`."
+    },
+    {
+      "n": 4,
+      "name": "List and filter earthquake events",
+      "op": "READ (filter / sort / paginate)",
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/events?min_magnitude=4.5&sort=magnitude&direction=desc&page_size=3",
+      "request_body": null,
+      "expected": 200,
+      "actual": 200,
+      "passed": true,
+      "elapsed_ms": 2058.5,
+      "server_ms": "9.07",
+      "location": null,
+      "response_body": {
+        "results": [
+          {
+            "alert": "green",
+            "depth_km": 10,
+            "event_type": "earthquake",
+            "felt": 11,
+            "latitude": -21.2982,
+            "longitude": 168.61,
+            "magnitude": 6.6,
+            "magnitude_type": "mww",
+            "network": "us",
+            "occurred_at": "2026-09-25T21:23:03.309Z",
+            "place": "80 km ENE of Tadine, New Caledonia",
+            "revision_count": 1,
+            "significance": 678,
+            "source_event_id": "us6000txpi",
+            "source_updated_at": "2026-09-26T03:57:04.448Z",
+            "status": "reviewed",
+            "tsunami": false,
+            "region_name": "New Caledonia",
+            "key": "usgs_us6000txpi"
+          },
+          {
+            "alert": "green",
+            "depth_km": 98,
+            "event_type": "earthquake",
+            "felt": 8,
+            "latitude": 52.9564,
+            "longitude": -171.5033,
+            "magnitude": 6.5,
+            "magnitude_type": "mww",
+            "network": "us",
+            "occurred_at": "2026-09-17T14:19:52.472Z",
+            "place": "177 km W of Nikolski, Alaska",
+            "revision_count": 1,
+            "significance": 653,
+            "source_event_id": "us7000ti1p",
+            "source_updated_at": "2026-09-24T20:47:47.992Z",
+            "status": "reviewed",
+            "tsunami": true,
+            "region_name": "Alaska",
+            "key": "usgs_us7000ti1p"
+          },
+          {
+            "alert": "green",
+            "depth_km": 372,
+            "event_type": "earthquake",
+            "felt": 21,
+            "latitude": -4.9832,
+            "longitude": 106.8742,
+            "magnitude": 6.5,
+            "magnitude_type": "mww",
+            "network": "us",
+            "occurred_at": "2026-09-11T21:23:55.907Z",
+            "place": "126 km NNE of Teluknaga, Indonesia",
+            "revision_count": 1,
+            "significance": 657,
+            "source_event_id": "us7000tgrk",
+            "source_updated_at": "2026-09-12T21:29:59.017Z",
+            "status": "reviewed",
+            "tsunami": false,
+            "region_name": "Indonesia",
+            "key": "usgs_us7000tgrk"
+          }
+        ],
+        "page": 1,
+        "page_size": 3,
+        "total": 553,
+        "total_pages": 185,
+        "query": {
+          "filters": {
+            "direction": "desc",
+            "min_magnitude": 4.5,
+            "sort": "magnitude"
+          },
+          "summary": "magnitude 4.5 to any — sorted by magnitude desc"
+        }
+      },
+      "saved": {},
+      "db_state": null,
+      "db": "AQL over `events` with bind variables; total = full match count."
+    },
+    {
+      "n": 5,
+      "name": "Create saved search",
+      "op": "CREATE",
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/saved-searches",
+      "request_body": {
+        "name": "Strong quakes M4.5+ (demo)",
+        "filters": {
+          "min_magnitude": 4.5,
+          "sort": "magnitude",
+          "direction": "desc"
+        }
+      },
+      "expected": 201,
+      "actual": 201,
+      "passed": true,
+      "elapsed_ms": 2104.1,
+      "server_ms": "16.78",
+      "location": null,
+      "response_body": {
+        "created_at": "2026-10-11T16:48:31.398Z",
+        "filters": {
+          "direction": "desc",
+          "min_magnitude": 4.5,
+          "sort": "magnitude"
+        },
+        "name": "Strong quakes M4.5+ (demo)",
+        "summary": "magnitude 4.5 to any — sorted by magnitude desc",
+        "updated_at": "2026-10-11T16:48:31.398Z",
+        "user_id": 2,
+        "id": "265750"
+      },
+      "saved": {
+        "saved_search_id": "265750"
+      },
+      "db_state": {
+        "check": "saved_searches document after POST",
+        "aql": "RETURN KEEP(DOCUMENT('saved_searches', @id), 'name', 'filters', 'user_id')",
+        "bind": {
+          "id": "265750"
+        },
+        "result": {
+          "filters": {
+            "direction": "desc",
+            "min_magnitude": 4.5,
+            "sort": "magnitude"
+          },
+          "name": "Strong quakes M4.5+ (demo)",
+          "user_id": 2
+        }
+      },
+      "db": "INSERT into `saved_searches` (per-user cap enforced atomically)."
+    },
+    {
+      "n": 6,
+      "name": "Read saved search (persistence check)",
+      "op": "READ",
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/saved-searches/265750",
+      "request_body": null,
+      "expected": 200,
+      "actual": 200,
+      "passed": true,
+      "elapsed_ms": 2058.5,
+      "server_ms": "8.92",
+      "location": null,
+      "response_body": {
+        "created_at": "2026-10-11T16:48:31.398Z",
+        "filters": {
+          "direction": "desc",
+          "min_magnitude": 4.5,
+          "sort": "magnitude"
+        },
+        "name": "Strong quakes M4.5+ (demo)",
+        "summary": "magnitude 4.5 to any — sorted by magnitude desc",
+        "updated_at": "2026-10-11T16:48:31.398Z",
+        "user_id": 2,
+        "id": "265750"
+      },
+      "saved": {},
+      "db_state": null,
+      "db": "Document fetched from `saved_searches` by key and owner."
+    },
+    {
+      "n": 7,
+      "name": "Rename saved search",
+      "op": "UPDATE",
+      "method": "PATCH",
+      "url": "http://localhost:8000/api/v1/saved-searches/265750",
+      "request_body": {
+        "name": "Strong quakes M4.5+ (renamed)"
+      },
+      "expected": 200,
+      "actual": 200,
+      "passed": true,
+      "elapsed_ms": 2051.2,
+      "server_ms": "11.06",
+      "location": null,
+      "response_body": {
+        "created_at": "2026-10-11T16:48:31.398Z",
+        "filters": {
+          "direction": "desc",
+          "min_magnitude": 4.5,
+          "sort": "magnitude"
+        },
+        "name": "Strong quakes M4.5+ (renamed)",
+        "summary": "magnitude 4.5 to any — sorted by magnitude desc",
+        "updated_at": "2026-10-11T16:48:35.524Z",
+        "user_id": 2,
+        "id": "265750"
+      },
+      "saved": {},
+      "db_state": {
+        "check": "saved_searches document after PATCH",
+        "aql": "RETURN KEEP(DOCUMENT('saved_searches', @id), 'name', 'updated_at')",
+        "bind": {
+          "id": "265750"
+        },
+        "result": {
+          "name": "Strong quakes M4.5+ (renamed)",
+          "updated_at": "2026-10-11T16:48:35.524Z"
+        }
+      },
+      "db": "UPDATE of `name` and `updated_at` in `saved_searches`."
+    },
+    {
+      "n": 8,
+      "name": "Create alert rule",
+      "op": "CREATE",
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/alert-rules",
+      "request_body": {
+        "name": "Alaska M2.5+ watch (demo)",
+        "enabled": true,
+        "cooldown_minutes": 30,
+        "conditions": {
+          "minimum_magnitude": 2.5,
+          "center": [
+            -149.9,
+            61.2
+          ],
+          "radius_km": 500
+        }
+      },
+      "expected": 201,
+      "actual": 201,
+      "passed": true,
+      "elapsed_ms": 2069.2,
+      "server_ms": "9.99",
+      "location": null,
+      "response_body": {
+        "id": "bdcd462b4b9443768aed4a8f0fea109e",
+        "user_id": 2,
+        "name": "Alaska M2.5+ watch (demo)",
+        "enabled": true,
+        "conditions": {
+          "minimum_magnitude": 2.5,
+          "maximum_depth_km": null,
+          "minimum_depth_km": null,
+          "center": [
+            -149.9,
+            61.2
+          ],
+          "radius_km": 500,
+          "alert_levels": [],
+          "tsunami_only": false,
+          "event_types": [
+            "earthquake"
+          ]
+        },
+        "cooldown_minutes": 30,
+        "created_at": "2026-10-11T16:48:37.611Z",
+        "updated_at": "2026-10-11T16:48:37.611Z"
+      },
+      "saved": {
+        "rule_id": "bdcd462b4b9443768aed4a8f0fea109e"
+      },
+      "db_state": {
+        "check": "alert_rules document and owner edge after POST",
+        "aql": "RETURN {rule: KEEP(DOCUMENT('alert_rules', @id), 'name', 'enabled', 'cooldown_minutes'), owner_edges: LENGTH(FOR e IN user_owns_rule FILTER e._to == CONCAT('alert_rules/', @id) OR e._from == CONCAT('alert_rules/', @id) RETURN 1)}",
+        "bind": {
+          "id": "bdcd462b4b9443768aed4a8f0fea109e"
+        },
+        "result": {
+          "rule": {
+            "cooldown_minutes": 30,
+            "enabled": true,
+            "name": "Alaska M2.5+ watch (demo)"
+          },
+          "owner_edges": 1
+        }
+      },
+      "db": "INSERT into `alert_rules` plus `user_owns_rule` graph edge."
+    },
+    {
+      "n": 9,
+      "name": "Update alert rule",
+      "op": "UPDATE",
+      "method": "PATCH",
+      "url": "http://localhost:8000/api/v1/alert-rules/bdcd462b4b9443768aed4a8f0fea109e",
+      "request_body": {
+        "name": "Alaska M3.0+ watch (updated)",
+        "cooldown_minutes": 15,
+        "conditions": {
+          "minimum_magnitude": 3.0,
+          "center": [
+            -149.9,
+            61.2
+          ],
+          "radius_km": 500
+        }
+      },
+      "expected": 200,
+      "actual": 200,
+      "passed": true,
+      "elapsed_ms": 2076.1,
+      "server_ms": "23.15",
+      "location": null,
+      "response_body": {
+        "id": "bdcd462b4b9443768aed4a8f0fea109e",
+        "user_id": 2,
+        "name": "Alaska M3.0+ watch (updated)",
+        "enabled": true,
+        "conditions": {
+          "minimum_magnitude": 3,
+          "maximum_depth_km": null,
+          "minimum_depth_km": null,
+          "center": [
+            -149.9,
+            61.2
+          ],
+          "radius_km": 500,
+          "alert_levels": [],
+          "tsunami_only": false,
+          "event_types": [
+            "earthquake"
+          ]
+        },
+        "cooldown_minutes": 15,
+        "created_at": "2026-10-11T16:48:37.611Z",
+        "updated_at": "2026-10-11T16:48:39.697Z"
+      },
+      "saved": {},
+      "db_state": {
+        "check": "alert_rules document after PATCH",
+        "aql": "RETURN KEEP(DOCUMENT('alert_rules', @id), 'name', 'cooldown_minutes', 'conditions')",
+        "bind": {
+          "id": "bdcd462b4b9443768aed4a8f0fea109e"
+        },
+        "result": {
+          "conditions": {
+            "minimum_magnitude": 3,
+            "maximum_depth_km": null,
+            "minimum_depth_km": null,
+            "center": [
+              -149.9,
+              61.2
+            ],
+            "radius_km": 500,
+            "alert_levels": [],
+            "tsunami_only": false,
+            "event_types": [
+              "earthquake"
+            ]
+          },
+          "cooldown_minutes": 15,
+          "name": "Alaska M3.0+ watch (updated)"
+        }
+      },
+      "db": "UPDATE of the rule document; validated against the pydantic schema first."
+    },
+    {
+      "n": 10,
+      "name": "Preview alert rule against stored events",
+      "op": "READ",
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/alert-rules/bdcd462b4b9443768aed4a8f0fea109e/preview",
+      "request_body": null,
+      "expected": 200,
+      "actual": 200,
+      "passed": true,
+      "elapsed_ms": 2069.3,
+      "server_ms": "20.36",
+      "location": null,
+      "response_body": {
+        "rule": {
+          "id": "bdcd462b4b9443768aed4a8f0fea109e",
+          "user_id": 2,
+          "name": "Alaska M3.0+ watch (updated)",
+          "enabled": true,
+          "conditions": {
+            "minimum_magnitude": 3,
+            "maximum_depth_km": null,
+            "minimum_depth_km": null,
+            "center": [
+              -149.9,
+              61.2
+            ],
+            "radius_km": 500,
+            "alert_levels": [],
+            "tsunami_only": false,
+            "event_types": [
+              "earthquake"
+            ]
+          },
+          "cooldown_minutes": 15,
+          "created_at": "2026-10-11T16:48:37.611Z",
+          "updated_at": "2026-10-11T16:48:39.697Z"
+        },
+        "window_days": 7,
+        "would_match": [
+          {
+            "event": {
+              "alert": null,
+              "depth_km": 104.1,
+              "event_type": "earthquake",
+              "felt": null,
+              "latitude": 62.853,
+              "longitude": -150.688,
+              "magnitude": 3.6,
+              "magnitude_type": "ml",
+              "network": "ak",
+              "occurred_at": "2026-10-11T13:15:41.929Z",
+              "place": "39 km N of Petersville, Alaska",
+              "revision_count": 2,
+              "significance": 199,
+              "source_event_id": "aka2026udsseu",
+              "source_updated_at": "2026-10-11T13:26:53.040Z",
+              "status": "automatic",
+              "tsunami": false,
+              "region_name": "Alaska",
+              "key": "usgs_aka2026udsseu"
+            },
+            "explanation": {
+              "matched": true,
+              "reason": [
+                "type earthquake in ['earthquake']",
+                "magnitude 3.6 >= 3",
+                "distance 188 km <= 500 km"
+              ],
+              "failed": [],
+              "distance_km": 188.3
+            }
+          },
+          {
+            "event": {
+              "alert": null,
+              "depth_km": 152.8,
+              "event_type": "earthquake",
+              "felt": null,
+              "latitude": 58.459,
+              "longitude": -155.693,
+              "magnitude": 3.4,
+              "magnitude_type": "ml",
+              "network": "ak",
+              "occurred_at": "2026-10-11T08:27:06.559Z",
+              "place": "61 km ESE of King Salmon, Alaska",
+              "revision_count": 1,
+              "significance": 178,
+              "source_event_id": "aka2026udjcmd",
+              "source_updated_at": "2026-10-11T11:39:18.040Z",
+              "status": "automatic",
+              "tsunami": false,
+              "region_name": "Alaska",
+              "key": "usgs_aka2026udjcmd"
+            },
+            "explanation": {
+              "matched": true,
+              "reason": [
+                "type earthquake in ['earthquake']",
+                "magnitude 3.4 >= 3",
+                "distance 444 km <= 500 km"
+              ],
+              "failed": [],
+              "distance_km": 444.3
+            }
+          },
+          {
+            "event": {
+              "alert": null,
+              "depth_km": 113.1,
+              "event_type": "earthquake",
+              "felt": null,
+              "latitude": 62.871,
+              "longitude": -151.02,
+              "magnitude": 3.1,
+              "magnitude_type": "ml",
+              "network": "ak",
+              "occurred_at": "2026-10-10T23:42:03.290Z",
+              "place": "43 km NNW of Petersville, Alaska",
+              "revision_count": 1,
+              "significance": 148,
+              "source_event_id": "aka2026ucrphh",
+              "source_updated_at": "2026-10-11T00:37:51.040Z",
+              "status": "automatic",
+              "tsunami": false,
+              "region_name": "Alaska",
+              "key": "usgs_aka2026ucrphh"
+            },
+            "explanation": {
+              "matched": true,
+              "reason": [
+                "type earthquake in ['earthquake']",
+                "magnitude 3.1 >= 3",
+                "distance 195 km <= 500 km"
+              ],
+              "failed": [],
+              "distance_km": 194.8
+            }
+          },
+          {
+            "event": {
+              "alert": null,
+              "depth_km": 80.3,
+              "event_type": "earthquake",
+              "felt": null,
+              "latitude": 59.842,
+              "longitude": -152.541,
+              "magnitude": 3,
+              "magnitude_type": "ml",
+              "network": "ak",
+              "occurred_at": "2026-10-11T06:22:39.125Z",
+              "place": "40 km W of Anchor Point, Alaska",
+              "revision_count": 1,
+              "significance": 138,
+              "source_event_id": "aka2026udeyax",
+              "source_updated_at": "2026-10-11T07:26:21.040Z",
+              "status": "automatic",
+              "tsunami": false,
+              "region_name": "Alaska",
+              "key": "usgs_aka2026udeyax"
+            },
+            "explanation": {
+              "matched": true,
+              "reason": [
+                "type earthquake in ['earthquake']",
+                "magnitude 3 >= 3",
+                "distance 209 km <= 500 km"
+              ],
+              "failed": [],
+              "distance_km": 209.0
+            }
+          }
+        ],
+        "count": 4
+      },
+      "saved": {},
+      "db_state": null,
+      "db": "Geo/magnitude AQL over `events` using the stored rule conditions."
+    },
+    {
+      "n": 11,
+      "name": "Create research snapshot",
+      "op": "CREATE",
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/research/snapshots",
+      "request_body": {
+        "title": "M4.5+ research snapshot (demo)",
+        "notes": "Frozen selection created from the CRUD demonstration.",
+        "filters": {
+          "min_magnitude": 4.5,
+          "sort": "magnitude",
+          "direction": "desc"
+        }
+      },
+      "expected": 201,
+      "actual": 201,
+      "passed": true,
+      "elapsed_ms": 2119.5,
+      "server_ms": "38.65",
+      "location": null,
+      "response_body": {
+        "id": "e748993f062e4ae6b38171f43fba1e6b",
+        "title": "M4.5+ research snapshot (demo)",
+        "created_at": "2026-10-11T16:48:43.897Z",
+        "row_count": 553,
+        "content_sha256": "bc516d5364ab0ecab59c975abd0df84b6610ac7637a7c97ee3356530b18de091",
+        "query_definition": {
+          "filters": {
+            "direction": "desc",
+            "min_magnitude": 4.5,
+            "sort": "magnitude"
+          },
+          "summary": "magnitude 4.5 to any — sorted by magnitude desc"
+        },
+        "application_version": "dev"
+      },
+      "saved": {
+        "snapshot_id": "e748993f062e4ae6b38171f43fba1e6b"
+      },
+      "db_state": {
+        "check": "research_snapshots document after POST",
+        "aql": "RETURN {title: DOCUMENT('research_snapshots', @id).title, members: LENGTH(DOCUMENT('research_snapshots', @id).members), content_sha256: DOCUMENT('research_snapshots', @id).content_sha256}",
+        "bind": {
+          "id": "e748993f062e4ae6b38171f43fba1e6b"
+        },
+        "result": {
+          "title": "M4.5+ research snapshot (demo)",
+          "members": 553,
+          "content_sha256": "bc516d5364ab0ecab59c975abd0df84b6610ac7637a7c97ee3356530b18de091"
+        }
+      },
+      "db": "Freezes matching event revisions into `research_snapshots` with a SHA-256 checksum."
+    },
+    {
+      "n": 12,
+      "name": "Delete research snapshot",
+      "op": "DELETE",
+      "method": "DELETE",
+      "url": "http://localhost:8000/api/v1/research/snapshots/e748993f062e4ae6b38171f43fba1e6b",
+      "request_body": null,
+      "expected": 204,
+      "actual": 204,
+      "passed": true,
+      "elapsed_ms": 2075.6,
+      "server_ms": "11.98",
+      "location": null,
+      "response_body": "",
+      "saved": {},
+      "db_state": {
+        "check": "research_snapshots lookup after DELETE",
+        "aql": "RETURN DOCUMENT('research_snapshots', @id)",
+        "bind": {
+          "id": "e748993f062e4ae6b38171f43fba1e6b"
+        },
+        "result": null
+      },
+      "db": "REMOVE from `research_snapshots`."
+    },
+    {
+      "n": 13,
+      "name": "Delete alert rule",
+      "op": "DELETE",
+      "method": "DELETE",
+      "url": "http://localhost:8000/api/v1/alert-rules/bdcd462b4b9443768aed4a8f0fea109e",
+      "request_body": null,
+      "expected": 204,
+      "actual": 204,
+      "passed": true,
+      "elapsed_ms": 2066.5,
+      "server_ms": "13.96",
+      "location": null,
+      "response_body": "",
+      "saved": {},
+      "db_state": {
+        "check": "alert_rules lookup and edge count after DELETE",
+        "aql": "RETURN {rule: DOCUMENT('alert_rules', @id), owner_edges: LENGTH(FOR e IN user_owns_rule FILTER e._to == CONCAT('alert_rules/', @id) OR e._from == CONCAT('alert_rules/', @id) RETURN 1)}",
+        "bind": {
+          "id": "bdcd462b4b9443768aed4a8f0fea109e"
+        },
+        "result": {
+          "rule": null,
+          "owner_edges": 0
+        }
+      },
+      "db": "REMOVE rule and its `user_owns_rule` edge."
+    },
+    {
+      "n": 14,
+      "name": "Delete saved search",
+      "op": "DELETE",
+      "method": "DELETE",
+      "url": "http://localhost:8000/api/v1/saved-searches/265750",
+      "request_body": null,
+      "expected": 204,
+      "actual": 204,
+      "passed": true,
+      "elapsed_ms": 2069.6,
+      "server_ms": "6.64",
+      "location": null,
+      "response_body": "",
+      "saved": {},
+      "db_state": {
+        "check": "saved_searches lookup after DELETE",
+        "aql": "RETURN DOCUMENT('saved_searches', @id)",
+        "bind": {
+          "id": "265750"
+        },
+        "result": null
+      },
+      "db": "REMOVE from `saved_searches`."
+    },
+    {
+      "n": 15,
+      "name": "Verify deletion (expect 404)",
+      "op": "READ (negative)",
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/saved-searches/265750",
+      "request_body": null,
+      "expected": 404,
+      "actual": 404,
+      "passed": true,
+      "elapsed_ms": 2060.0,
+      "server_ms": "7.91",
+      "location": null,
+      "response_body": {
+        "error": {
+          "code": "not_found",
+          "message": "Saved search not found.",
+          "details": {},
+          "correlation_id": "711f34eb1dd240b2ab66448089a1acbd"
+        }
+      },
+      "saved": {},
+      "db_state": null,
+      "db": "Lookup returns no document, proving the DELETE persisted."
+    }
+  ]
+}

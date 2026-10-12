@@ -1,0 +1,11 @@
+Command:
+docker compose exec -T -e DJANGO_SETTINGS_MODULE=config.settings_test -e QW_ENV=test web python -m pytest
+
+Container Python: /usr/local/bin/python (Python 3.12 container image)
+Exit code: 1
+stdout: (empty)
+stderr:
+/usr/local/bin/python: No module named pytest
+
+Result:
+Pytest did not start test collection. No test cases ran; pass/fail/skip/error counts are not available and must not be represented as zero test failures or a passing suite. No dependencies were installed. The test database was absent before the attempt and remained absent afterward.

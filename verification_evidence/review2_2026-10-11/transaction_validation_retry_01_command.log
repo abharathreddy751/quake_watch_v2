@@ -1,0 +1,7 @@
+command=docker compose exec -T -e QW_ENV=test -e DJANGO_SETTINGS_MODULE=config.settings_test web python -c <guarded transaction validation; cleanup corrected>
+exit_code=0
+--- stdout ---
+TXN_RETRY_EVIDENCE_JSON={"environment": "test", "database": "quakewatch_test", "database_list": ["_system", "quakewatch", "quakewatch_test"], "previous_leftovers_cleaned": ["review2_commit_799e97ad1b9e", "review2_counter_799e97ad1b9e"], "commit": {"status": "passed", "return": "committed", "both_documents_visible": true}, "rollback": {"status": "passed", "exception": "DocumentInsertError", "partial_writes_absent": true}, "conflict_retry": {"status": "passed", "workers": 2, "final_counter": 2, "errors": [], "timed_out": false}, "temporary_documents_cleaned": true, "database_list_after": ["_system", "quakewatch", "quakewatch_test"], "overall_status": "passed"}
+
+--- stderr ---
+2026-10-11T14:18:21.023206Z [info     ] txn_conflict_retry             [apps.core.arango.transactions] attempt=1 delay_s=0.085

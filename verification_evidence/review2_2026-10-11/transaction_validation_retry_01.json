@@ -1,0 +1,37 @@
+{
+  "environment": "test",
+  "database": "quakewatch_test",
+  "database_list": [
+    "_system",
+    "quakewatch",
+    "quakewatch_test"
+  ],
+  "previous_leftovers_cleaned": [
+    "review2_commit_799e97ad1b9e",
+    "review2_counter_799e97ad1b9e"
+  ],
+  "commit": {
+    "status": "passed",
+    "return": "committed",
+    "both_documents_visible": true
+  },
+  "rollback": {
+    "status": "passed",
+    "exception": "DocumentInsertError",
+    "partial_writes_absent": true
+  },
+  "conflict_retry": {
+    "status": "passed",
+    "workers": 2,
+    "final_counter": 2,
+    "errors": [],
+    "timed_out": false
+  },
+  "temporary_documents_cleaned": true,
+  "database_list_after": [
+    "_system",
+    "quakewatch",
+    "quakewatch_test"
+  ],
+  "overall_status": "passed"
+}

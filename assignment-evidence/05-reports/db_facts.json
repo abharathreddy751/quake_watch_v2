@@ -1,0 +1,1426 @@
+{
+  "database": "quakewatch",
+  "server": "3.12.5",
+  "collections": [
+    {
+      "name": "alert_matches",
+      "type": "document",
+      "count": 0,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_matches_rule_event",
+          "type": "persistent",
+          "fields": [
+            "rule_key",
+            "event_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_matches_user_time",
+          "type": "persistent",
+          "fields": [
+            "user_id",
+            "matched_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "alert_rules",
+      "type": "document",
+      "count": 1,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_rules_user",
+          "type": "persistent",
+          "fields": [
+            "user_id"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_rules_enabled",
+          "type": "persistent",
+          "fields": [
+            "enabled"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "audit_log",
+      "type": "document",
+      "count": 22,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_audit_at",
+          "type": "persistent",
+          "fields": [
+            "at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "auth_users",
+      "type": "document",
+      "count": 2,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_auth_username",
+          "type": "persistent",
+          "fields": [
+            "username"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_auth_username_ci",
+          "type": "persistent",
+          "fields": [
+            "username_ci"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "backfill_jobs",
+      "type": "document",
+      "count": 2,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_backfill_status",
+          "type": "persistent",
+          "fields": [
+            "status"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "cache_entries",
+      "type": "document",
+      "count": 3,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_cache_ttl",
+          "type": "ttl",
+          "fields": [
+            "expires_at"
+          ],
+          "unique": false,
+          "sparse": true,
+          "geoJson": null,
+          "expireAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "circuit_breakers",
+      "type": "document",
+      "count": 0,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "dead_letters",
+      "type": "document",
+      "count": 0,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_dead_last_failure",
+          "type": "persistent",
+          "fields": [
+            "last_failure_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_dead_source_event",
+          "type": "persistent",
+          "fields": [
+            "source",
+            "source_event_id"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "event_identities",
+      "type": "document",
+      "count": 3402,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_identities_event_key",
+          "type": "persistent",
+          "fields": [
+            "event_key"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "event_in_region",
+      "type": "edge",
+      "count": 2670,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "edge",
+          "type": "edge",
+          "fields": [
+            "_from",
+            "_to"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "event_reported_by_network",
+      "type": "edge",
+      "count": 2670,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "edge",
+          "type": "edge",
+          "fields": [
+            "_from",
+            "_to"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "event_revisions",
+      "type": "document",
+      "count": 2767,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_revisions_event_rev",
+          "type": "persistent",
+          "fields": [
+            "event_key",
+            "revision_number"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_revisions_observed_at",
+          "type": "persistent",
+          "fields": [
+            "observed_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_revisions_changed_fields",
+          "type": "persistent",
+          "fields": [
+            "changed_fields[*]"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "events",
+      "type": "document",
+      "count": 2670,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_events_geo",
+          "type": "geo",
+          "fields": [
+            "coordinates"
+          ],
+          "unique": false,
+          "sparse": true,
+          "geoJson": true,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_events_source_identity",
+          "type": "persistent",
+          "fields": [
+            "source",
+            "source_event_id",
+            "merged_into"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_events_occurred_at",
+          "type": "persistent",
+          "fields": [
+            "occurred_at",
+            "_key"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_events_magnitude",
+          "type": "persistent",
+          "fields": [
+            "magnitude",
+            "_key"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "id_sequences",
+      "type": "document",
+      "count": 1,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "ingestion_runs",
+      "type": "document",
+      "count": 148,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_runs_started_at",
+          "type": "persistent",
+          "fields": [
+            "started_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_runs_status",
+          "type": "persistent",
+          "fields": [
+            "status"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_runs_kind_started",
+          "type": "persistent",
+          "fields": [
+            "kind",
+            "started_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "job_leases",
+      "type": "document",
+      "count": 0,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_leases_ttl",
+          "type": "ttl",
+          "fields": [
+            "expires_at"
+          ],
+          "unique": false,
+          "sparse": true,
+          "geoJson": null,
+          "expireAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "job_schedules",
+      "type": "document",
+      "count": 2,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "jobs",
+      "type": "document",
+      "count": 98,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_jobs_claim",
+          "type": "persistent",
+          "fields": [
+            "status",
+            "run_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_jobs_dedupe",
+          "type": "persistent",
+          "fields": [
+            "dedupe_key"
+          ],
+          "unique": true,
+          "sparse": true,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_jobs_task_created",
+          "type": "persistent",
+          "fields": [
+            "task",
+            "created_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_jobs_purge",
+          "type": "ttl",
+          "fields": [
+            "purge_at"
+          ],
+          "unique": false,
+          "sparse": true,
+          "geoJson": null,
+          "expireAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "metric_counters",
+      "type": "document",
+      "count": 11,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "metric_series",
+      "type": "document",
+      "count": 77,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "networks",
+      "type": "document",
+      "count": 15,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "rate_limits",
+      "type": "document",
+      "count": 2,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_rate_limits_ttl",
+          "type": "ttl",
+          "fields": [
+            "expires_at"
+          ],
+          "unique": false,
+          "sparse": true,
+          "geoJson": null,
+          "expireAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "raw_payloads",
+      "type": "document",
+      "count": 2843,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_raw_ttl",
+          "type": "ttl",
+          "fields": [
+            "expires_at"
+          ],
+          "unique": false,
+          "sparse": true,
+          "geoJson": null,
+          "expireAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "regions",
+      "type": "document",
+      "count": 126,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "research_snapshots",
+      "type": "document",
+      "count": 0,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_snapshots_user",
+          "type": "persistent",
+          "fields": [
+            "user_id",
+            "created_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "rule_matched_event",
+      "type": "edge",
+      "count": 0,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "edge",
+          "type": "edge",
+          "fields": [
+            "_from",
+            "_to"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "saved_searches",
+      "type": "document",
+      "count": 0,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_saved_user",
+          "type": "persistent",
+          "fields": [
+            "user_id",
+            "created_at"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "schema_meta",
+      "type": "document",
+      "count": 1,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "sessions",
+      "type": "document",
+      "count": 7,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "qw_sessions_ttl",
+          "type": "ttl",
+          "fields": [
+            "expire_at"
+          ],
+          "unique": false,
+          "sparse": true,
+          "geoJson": null,
+          "expireAfter": 0
+        }
+      ]
+    },
+    {
+      "name": "user_owns_rule",
+      "type": "edge",
+      "count": 1,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        },
+        {
+          "name": "edge",
+          "type": "edge",
+          "fields": [
+            "_from",
+            "_to"
+          ],
+          "unique": false,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "type": "document",
+      "count": 1,
+      "indexes": [
+        {
+          "name": "primary",
+          "type": "primary",
+          "fields": [
+            "_key"
+          ],
+          "unique": true,
+          "sparse": false,
+          "geoJson": null,
+          "expireAfter": null
+        }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "globallyUniqueId": "h4B565C2A8A45/588",
+      "id": "265",
+      "name": "events_search",
+      "type": "arangosearch"
+    }
+  ],
+  "view_properties": {
+    "events_search": {
+      "error": false,
+      "code": 200,
+      "writebufferSizeMax": 33554432,
+      "writebufferIdle": 64,
+      "id": "265",
+      "storedValues": [],
+      "name": "events_search",
+      "type": "arangosearch",
+      "consolidationPolicy": {
+        "type": "tier",
+        "segmentsBytesFloor": 2097152,
+        "segmentsBytesMax": 5368709120,
+        "segmentsMax": 10,
+        "segmentsMin": 1,
+        "minScore": 0
+      },
+      "writebufferActive": 0,
+      "links": {
+        "events": {
+          "analyzers": [
+            "identity"
+          ],
+          "fields": {
+            "place": {
+              "analyzers": [
+                "text_en"
+              ]
+            },
+            "derived": {
+              "fields": {
+                "region_name": {
+                  "analyzers": [
+                    "text_en",
+                    "identity"
+                  ]
+                }
+              }
+            }
+          },
+          "includeAllFields": false,
+          "storeValues": "none",
+          "trackListPositions": false
+        }
+      },
+      "commitIntervalMsec": 1000,
+      "consolidationIntervalMsec": 1000,
+      "optimizeTopK": [],
+      "globallyUniqueId": "h4B565C2A8A45/588",
+      "cleanupIntervalStep": 2,
+      "primarySort": [
+        {
+          "field": "occurred_at",
+          "asc": false
+        }
+      ],
+      "primarySortCompression": "lz4"
+    }
+  },
+  "graphs": [
+    {
+      "_id": "_graphs/quakewatch_graph",
+      "_key": "quakewatch_graph",
+      "_rev": "_mQpo0QO---",
+      "edgeDefinitions": [
+        {
+          "collection": "event_in_region",
+          "from": [
+            "events"
+          ],
+          "to": [
+            "regions"
+          ]
+        },
+        {
+          "collection": "event_reported_by_network",
+          "from": [
+            "events"
+          ],
+          "to": [
+            "networks"
+          ]
+        },
+        {
+          "collection": "rule_matched_event",
+          "from": [
+            "alert_rules"
+          ],
+          "to": [
+            "events"
+          ]
+        },
+        {
+          "collection": "user_owns_rule",
+          "from": [
+            "users"
+          ],
+          "to": [
+            "alert_rules"
+          ]
+        }
+      ],
+      "orphanCollections": [],
+      "name": "quakewatch_graph"
+    }
+  ],
+  "analyzers": [
+    {
+      "name": "text_de",
+      "type": "text",
+      "properties": {
+        "locale": "de",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_es",
+      "type": "text",
+      "properties": {
+        "locale": "es",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_fi",
+      "type": "text",
+      "properties": {
+        "locale": "fi",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_fr",
+      "type": "text",
+      "properties": {
+        "locale": "fr",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_it",
+      "type": "text",
+      "properties": {
+        "locale": "it",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "identity",
+      "type": "identity",
+      "properties": {},
+      "features": [
+        "frequency",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_pt",
+      "type": "text",
+      "properties": {
+        "locale": "pt",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_en",
+      "type": "text",
+      "properties": {
+        "locale": "en",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_zh",
+      "type": "text",
+      "properties": {
+        "locale": "zh",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": false
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_no",
+      "type": "text",
+      "properties": {
+        "locale": "no",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_sv",
+      "type": "text",
+      "properties": {
+        "locale": "sv",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_ru",
+      "type": "text",
+      "properties": {
+        "locale": "ru",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    },
+    {
+      "name": "text_nl",
+      "type": "text",
+      "properties": {
+        "locale": "nl",
+        "case": "lower",
+        "stopwords": [],
+        "accent": false,
+        "stemming": true
+      },
+      "features": [
+        "frequency",
+        "position",
+        "norm"
+      ]
+    }
+  ],
+  "aql_functions": {
+    "error": false,
+    "code": 200,
+    "result": []
+  },
+  "event_stats": {
+    "events": 2670,
+    "revisions": 2767,
+    "min_time": "2026-08-26T00:16:47.697Z",
+    "max_time": "2026-10-11T16:39:30.720Z",
+    "min_mag": -1.05,
+    "max_mag": 6.6
+  },
+  "sample_event": {
+    "_key": "usgs_nc75447861",
+    "_id": "events/usgs_nc75447861",
+    "_rev": "_mQtYdRS---",
+    "source": "USGS",
+    "source_event_id": "nc75447861",
+    "associated_ids": [
+      "nc75447861"
+    ],
+    "event_type": "earthquake",
+    "magnitude": 1.67,
+    "magnitude_type": "md",
+    "place": "9 km N of Hollister, CA",
+    "occurred_at": "2026-10-11T16:39:30.720Z",
+    "source_updated_at": "2026-10-11T16:43:51.390Z",
+    "longitude": -121.415832519531,
+    "latitude": 36.9268341064453,
+    "depth_km": 8.71000003814697,
+    "felt": null,
+    "cdi": null,
+    "mmi": null,
+    "alert": null,
+    "status": "automatic",
+    "tsunami": false,
+    "significance": 43,
+    "network": "nc",
+    "contributors": [
+      "nc"
+    ],
+    "products": [
+      "focal-mechanism",
+      "nearby-cities",
+      "origin",
+      "phase-data"
+    ],
+    "detail_url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nc75447861.geojson",
+    "event_page_url": "https://earthquake.usgs.gov/earthquakes/eventpage/nc75447861",
+    "station_count": 29,
+    "min_station_distance_deg": 0.09661,
+    "rms_travel_time_residual": 0.07,
+    "azimuthal_gap_deg": 53,
+    "coordinates": [
+      -121.415832519531,
+      36.9268341064453
+    ],
+    "derived": {
+      "first_seen_via": "feed",
+      "first_seen_latency_s": 330.897,
+      "region_key": "california",
+      "region_name": "California",
+      "region_kind": "us_state",
+      "region_method_version": 1
+    },
+    "first_seen_at": "2026-10-11T16:45:01.617Z",
+    "last_seen_at": "2026-10-11T16:45:01.617Z",
+    "last_ingested_at": "2026-10-11T16:45:01.617Z",
+    "revision_count": 1,
+    "payload_hash": "b51fddc4b333d0b0f12dcdefb178b86daf21db3aaf9a722e2c1b47ecfee315e5",
+    "schema_version": 1,
+    "revision_policy_version": 1,
+    "merged_into": null,
+    "last_ingestion_run_id": "431647c2a27341f39db5416a3cf5e89e"
+  },
+  "sample_revision": {
+    "_id": "event_revisions/usgs_ci41338887_000001",
+    "_key": "usgs_ci41338887_000001",
+    "_rev": "_mQpn6o2---",
+    "after": {},
+    "before": {},
+    "changed_fields": [],
+    "event_key": "usgs_ci41338887",
+    "ingestion_run_id": "949e5bda9a1f45e9b9e843ca3e4cd60f",
+    "kind": "created",
+    "observed_at": "2026-09-25T10:43:00.091Z",
+    "payload_hash": "9f2e851908ca7c168ea4773c8acac2898e394a43b570cc9675739775e7d21f6b",
+    "policy_version": 1,
+    "revision_number": 1,
+    "source_updated_at": "2026-09-25T10:38:16.535Z",
+    "state": {
+      "alert": null,
+      "associated_ids": [
+        "ci41338887"
+      ],
+      "azimuthal_gap_deg": 47,
+      "cdi": null,
+      "contributors": [
+        "ci"
+      ],
+      "depth_km": 3.18,
+      "detail_url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ci41338887.geojson",
+      "event_page_url": "https://earthquake.usgs.gov/earthquakes/eventpage/ci41338887",
+      "event_type": "earthquake",
+      "felt": null,
+      "latitude": 33.2226666666667,
+      "longitude": -115.57,
+      "magnitude": 1.21,
+      "magnitude_type": "ml",
+      "min_station_distance_deg": 0.05651,
+      "mmi": null,
+      "network": "ci",
+      "occurred_at": "2026-09-25T10:34:51.670Z",
+      "place": "5 km WSW of Niland, CA",
+      "products": [
+        "nearby-cities",
+        "origin",
+        "phase-data",
+        "scitech-link"
+      ],
+      "rms_travel_time_residual": 0.21,
+      "significance": 23,
+      "source": "USGS",
+      "source_event_id": "ci41338887",
+      "source_updated_at": "2026-09-25T10:38:16.535Z",
+      "station_count": 35,
+      "status": "automatic",
+      "tsunami": false
+    }
+  }
+}

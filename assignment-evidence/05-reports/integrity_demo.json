@@ -1,0 +1,25 @@
+{
+  "schema_validation": {
+    "rejected": true,
+    "error_code": 1620,
+    "message": "Document does not match the QuakeWatch collection schema."
+  },
+  "unique_index": {
+    "rejected": true,
+    "error_code": 1210,
+    "message": "unique constraint violated - in index qw_events_source_identity of type persistent over 'source, source_event_id, merged_into'; conflicting key: usgs_us7000tbvm"
+  },
+  "transaction_rollback": {
+    "aborted": true,
+    "error_code": 1620,
+    "probe_doc_present_after": false
+  },
+  "transaction_commit": {
+    "committed": true,
+    "present": true
+  },
+  "counts_unchanged": {
+    "events": true,
+    "audit_log": true
+  }
+}
